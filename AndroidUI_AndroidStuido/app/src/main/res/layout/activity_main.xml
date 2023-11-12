@@ -124,7 +124,6 @@
                     android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/temp" />
-
                 <Button
                     android:id="@+id/temp_page"
                     android:layout_width="match_parent"
