@@ -12,5 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "AndroidUI_AndroidStudio"
-include ':app'
+include(":app")
