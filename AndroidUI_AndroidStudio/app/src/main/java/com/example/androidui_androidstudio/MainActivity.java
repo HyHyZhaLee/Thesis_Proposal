@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btn = findViewById(R.id.button_temp_page);
-        btn.setOnClickListener(new View.OnClickListener(){
+        Button btn_temp = findViewById(R.id.button_temp_page);
+        btn_temp.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
@@ -30,6 +30,54 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,HumidPage.class);
+                startActivity(intent);
+            }
+        });
+        Button btn_pm10 = findViewById(R.id.button_pm10_page);
+        btn_pm10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,PM10Page.class);
+                startActivity(intent);
+            }
+        });
+        Button btn_pm25 = findViewById(R.id.button_pm25_page);
+        btn_pm25.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,PM25Page.class);
+                startActivity(intent);
+            }
+        });
+        Button btn_co2 = findViewById(R.id.button_co2_page);
+        btn_co2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,CO2Page.class);
+                startActivity(intent);
+            }
+        });
+        Button btn_so2 = findViewById(R.id.button_so2_page);
+        btn_so2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,SO2Page.class);
+                startActivity(intent);
+            }
+        });
+        Button btn_co = findViewById(R.id.button_co_page);
+        btn_co.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,COPage.class);
+                startActivity(intent);
+            }
+        });
+        Button btn_o3 = findViewById(R.id.button_o3_page);
+        btn_o3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,O3Page.class);
                 startActivity(intent);
             }
         });
