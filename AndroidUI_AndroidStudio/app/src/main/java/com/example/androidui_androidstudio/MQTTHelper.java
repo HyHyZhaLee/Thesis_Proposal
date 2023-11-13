@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
-import org.eclipse.paho.android.service.MqttAndroidClient;
+import info.mqtt.android.service.Ack;
+import info.mqtt.android.service.MqttAndroidClient;
+//import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.DisconnectedBufferOptions;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -27,7 +29,7 @@ public class MQTTHelper {
     final String serverUri = "tcp://io.adafruit.com:1883";
 
     public MQTTHelper(Context context){
-        mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
+        mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId, Ack.AUTO_ACK);
         mqttAndroidClient.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean b, String s) {
@@ -85,7 +87,7 @@ public class MQTTHelper {
             });
 
 
-        } catch (MqttException ex){
+        } catch (Exception ex){ // Thay thế MqttException bằng Exception hoặc ngoại lệ cụ thể khác
             ex.printStackTrace();
         }
     }
@@ -105,8 +107,8 @@ public class MQTTHelper {
                     }
                 });
 
-            } catch (MqttException ex) {
-                System.err.println("Exceptionst subscribing");
+            } catch (Exception ex) { // Thay thế MqttException bằng Exception hoặc ngoại lệ cụ thể khác
+                System.err.println("Exception subscribing");
                 ex.printStackTrace();
             }
         }
