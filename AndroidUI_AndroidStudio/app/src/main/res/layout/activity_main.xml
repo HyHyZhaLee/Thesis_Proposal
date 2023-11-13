@@ -126,7 +126,7 @@
                         android:src="@drawable/temp" />
 
                     <Button
-                        android:id="@+id/temp_page"
+                        android:id="@+id/button_temp_page"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
