@@ -25,5 +25,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+        Button btn_humid = findViewById(R.id.button_humid_page);
+        btn_humid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,HumidPage.class);
+                startActivity(intent);
+            }
+        });
     }
 }
