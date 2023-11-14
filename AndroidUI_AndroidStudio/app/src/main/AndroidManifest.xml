@@ -22,6 +22,30 @@
         android:theme="@style/Theme.AndroidUI_AndroidStudio"
         tools:targetApi="31">
         <activity
+            android:name=".O3Page"
+            android:exported="false" />
+        <activity
+            android:name=".COPage"
+            android:exported="false" />
+        <activity
+            android:name=".SO2Page"
+            android:exported="false" />
+        <activity
+            android:name=".CO2Page"
+            android:exported="false" />
+        <activity
+            android:name=".PM25Page"
+            android:exported="false" />
+        <activity
+            android:name=".PM10Page"
+            android:exported="false" />
+        <activity
+            android:name=".HumidPage"
+            android:exported="false" />
+        <activity
+            android:name=".TempPage"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
