@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    tools:context=".Dashboard_main">
+    tools:context=".Activities.Dashboard_main">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,9 +30,9 @@
                 android:id="@+id/imageView"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/cloudy_sunny"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                app:srcCompat="@drawable/cloudy_sunny" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -89,7 +89,6 @@
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/rain"
                             app:srcCompat="@drawable/rain" />
 
                         <TextView
@@ -124,7 +123,6 @@
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/wind"
                             app:srcCompat="@drawable/wind" />
 
                         <TextView
@@ -159,7 +157,6 @@
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/humidity"
                             app:srcCompat="@drawable/humidity" />
 
                         <TextView
@@ -191,7 +188,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:elevation="-1dp"
-                    android:src="@drawable/small_white_circle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:srcCompat="@drawable/small_white_circle" />
 
@@ -224,12 +220,12 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/view1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                />
+                android:paddingEnd="24dp" />
 
 
         </LinearLayout>

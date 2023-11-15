@@ -1,12 +1,14 @@
-package com.example.androidui_androidstudio;
+package com.example.androidui_androidstudio.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.content.Intent;
-import android.view.View;
 import android.widget.Button;
+
+import com.example.androidui_androidstudio.MQTTHelper;
+import com.example.androidui_androidstudio.R;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;

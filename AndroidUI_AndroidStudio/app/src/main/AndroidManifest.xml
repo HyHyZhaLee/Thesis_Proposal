@@ -21,7 +21,7 @@
         android:theme="@style/Theme.AndroidUI_AndroidStudio"
         tools:targetApi="31">
         <activity
-            android:name=".Dashboard_main"
+            android:name=".Activities.Dashboard_main"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,31 +30,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".O3Page"
+            android:name=".Activities.O3Page"
             android:exported="false" />
         <activity
-            android:name=".COPage"
+            android:name=".Activities.COPage"
             android:exported="false" />
         <activity
-            android:name=".SO2Page"
+            android:name=".Activities.SO2Page"
             android:exported="false" />
         <activity
-            android:name=".CO2Page"
+            android:name=".Activities.CO2Page"
             android:exported="false" />
         <activity
-            android:name=".PM25Page"
+            android:name=".Activities.PM25Page"
             android:exported="false" />
         <activity
-            android:name=".PM10Page"
+            android:name=".Activities.PM10Page"
             android:exported="false" />
         <activity
-            android:name=".HumidPage"
+            android:name=".Activities.HumidPage"
             android:exported="false" />
         <activity
-            android:name=".TempPage"
+            android:name=".Activities.TempPage"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:exported="false"/>
     </application>
 
