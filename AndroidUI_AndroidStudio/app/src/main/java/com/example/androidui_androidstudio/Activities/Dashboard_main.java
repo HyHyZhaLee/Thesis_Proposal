@@ -9,8 +9,13 @@ import android.os.Bundle;
 import com.example.androidui_androidstudio.Adapters.HourlyAdapters;
 import com.example.androidui_androidstudio.Domains.Hourly;
 import com.example.androidui_androidstudio.R;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class Dashboard_main extends AppCompatActivity {
     private RecyclerView.Adapter adapterHourly;
@@ -19,6 +24,7 @@ public class Dashboard_main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_main);
+        updateCurrentTime(); // Add this line to update the time
         initRecycleViews();
     }
 
@@ -36,6 +42,19 @@ public class Dashboard_main extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         adapterHourly = new HourlyAdapters(items);
         recyclerView.setAdapter(adapterHourly);
+    }
+
+    private void updateCurrentTime() {
+        TextView textViewTime = findViewById(R.id.value_time); // Make sure you have a TextView with the id value_time in your layout
+        Calendar calendar = Calendar.getInstance();
+        TimeZone tz = TimeZone.getTimeZone("Asia/Ho_Chi_Minh");
+        calendar.setTimeZone(tz);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd '|' hh:mm a", Locale.ENGLISH);
+        sdf.setTimeZone(tz);
+
+        String currentTime = sdf.format(calendar.getTime());
+        textViewTime.setText(currentTime);
     }
 
 }
