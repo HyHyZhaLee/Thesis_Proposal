@@ -11,6 +11,7 @@ import com.example.androidui_androidstudio.Domains.Hourly;
 import com.example.androidui_androidstudio.R;
 
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -28,8 +29,8 @@ public class Dashboard_main extends AppCompatActivity {
 
     //For weather API
     EditText editSearch;
-    Text txtName,txtCountry;
-
+    TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice;
+    ImageView imgWeatherStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,14 @@ public class Dashboard_main extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard_main);
         updateCurrentTime(); // Add this line to update the time
         initRecycleViews();
+        weatherRun();
+    }
+
+    private void weatherRun() {
+        txtWeatherStatus = findViewById(R.id.textViewWeatherStatus);
+        txtAQI = findViewById(R.id.textViewAQI);
+        txtCity = findViewById(R.id.textViewCity);
+        txtAdvice = findViewById(R.id.textViewAdvice);
     }
 
     private void initRecycleViews() {
@@ -56,7 +65,7 @@ public class Dashboard_main extends AppCompatActivity {
     }
 
     private void updateCurrentTime() {
-        TextView textViewTime = findViewById(R.id.value_time); // Make sure you have a TextView with the id value_time in your layout
+        TextView textViewTime = findViewById(R.id.textViewTime); // Make sure you have a TextView with the id value_time in your layout
         Calendar calendar = Calendar.getInstance();
         TimeZone tz = TimeZone.getTimeZone("Asia/Ho_Chi_Minh");
         calendar.setTimeZone(tz);

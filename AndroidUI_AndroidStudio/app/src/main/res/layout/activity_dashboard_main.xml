@@ -17,7 +17,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textViewWeatherStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mostly Cloudy"
@@ -27,7 +27,7 @@
                 android:textColor="@color/text_color"/>
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageViewWeatherStatus"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
@@ -35,7 +35,7 @@
                 app:srcCompat="@drawable/cloudy_sunny" />
 
             <TextView
-                android:id="@+id/value_time"
+                android:id="@+id/textViewTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mon June 17 | 10:00 AM"
@@ -45,7 +45,7 @@
                 android:layout_marginTop="16dp"/>
 
             <TextView
-                android:id="@+id/value_AQI"
+                android:id="@+id/textViewAQI"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="AQI 25"
@@ -54,7 +54,7 @@
                 android:textColor="@color/text_color"
                 android:textSize="63sp"/>
             <TextView
-                android:id="@+id/value_city"
+                android:id="@+id/textViewCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ho Chi Minh city"
@@ -63,7 +63,7 @@
                 android:textAlignment="center" />
 
             <TextView
-                android:id="@+id/value_advice"
+                android:id="@+id/textViewAdvice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Best day to go out"
@@ -94,14 +94,14 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView2"
+                            android:id="@+id/imageViewRain"
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/rain" />
 
                         <TextView
-                            android:id="@+id/textView5"
+                            android:id="@+id/textViewRain"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="22%"
@@ -110,13 +110,14 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/textView6"
+                            android:id="@+id/textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Rain"
                             android:textAlignment="center"
                             android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:ignore="DuplicateIds" />
 
                     </LinearLayout>
 
@@ -128,14 +129,14 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView2"
+                            android:id="@+id/imageViewWindSpeed"
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/wind" />
 
                         <TextView
-                            android:id="@+id/textView5"
+                            android:id="@+id/textViewWindSpeed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="22%"
@@ -144,13 +145,14 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/textView6"
+                            android:id="@+id/textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Wind speed"
                             android:textAlignment="center"
                             android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:ignore="DuplicateIds" />
 
                     </LinearLayout>
 
@@ -162,14 +164,14 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView2"
+                            android:id="@+id/imageViewHumidity"
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/humidity" />
 
                         <TextView
-                            android:id="@+id/textView5"
+                            android:id="@+id/textViewHumidity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="18%"
@@ -178,13 +180,14 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/textView6"
+                            android:id="@+id/textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Humidity"
                             android:textAlignment="center"
                             android:textColor="@color/white"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:ignore="DuplicateIds" />
 
                     </LinearLayout>
 
@@ -193,12 +196,13 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:elevation="-1dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@drawable/small_white_circle" />
+                    app:srcCompat="@drawable/small_white_circle"
+                    tools:ignore="MissingConstraints" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -208,7 +212,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView10"
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -216,16 +220,17 @@
                     android:text="Today"
                     android:textColor="@color/text_color"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="DuplicateIds" />
 
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
-                    android:text="Next 7 days"
-                    android:textColor="@color/text_color"
-                    android:textStyle="bold" />
+<!--                <TextView-->
+<!--                    android:id="@+id/textView11"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="24dp"-->
+<!--                    android:text="Next 7 days"-->
+<!--                    android:textColor="@color/text_color"-->
+<!--                    android:textStyle="bold" />-->
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
