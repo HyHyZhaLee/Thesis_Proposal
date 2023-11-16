@@ -9,7 +9,11 @@ import android.os.Bundle;
 import com.example.androidui_androidstudio.Adapters.HourlyAdapters;
 import com.example.androidui_androidstudio.Domains.Hourly;
 import com.example.androidui_androidstudio.R;
+
+import android.widget.EditText;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
@@ -18,8 +22,15 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class Dashboard_main extends AppCompatActivity {
+
     private RecyclerView.Adapter adapterHourly;
     private RecyclerView recyclerView;
+
+    //For weather API
+    EditText editSearch;
+    Text txtName,txtCountry;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
