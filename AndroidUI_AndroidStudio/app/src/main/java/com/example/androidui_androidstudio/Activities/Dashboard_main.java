@@ -1,23 +1,26 @@
 package com.example.androidui_androidstudio.Activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
 
 import com.example.androidui_androidstudio.Adapters.HourlyAdapters;
 import com.example.androidui_androidstudio.Domains.Hourly;
 import com.example.androidui_androidstudio.R;
+import com.google.android.gms.location.LocationRequest;
 
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -28,7 +31,6 @@ public class Dashboard_main extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     //For weather API
-    EditText editSearch;
     TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice;
     ImageView imgWeatherStatus;
 
@@ -41,11 +43,41 @@ public class Dashboard_main extends AppCompatActivity {
         weatherRun();
     }
 
+    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
+
     private void weatherRun() {
         txtWeatherStatus = findViewById(R.id.textViewWeatherStatus);
         txtAQI = findViewById(R.id.textViewAQI);
         txtCity = findViewById(R.id.textViewCity);
         txtAdvice = findViewById(R.id.textViewAdvice);
+
+        if(ContextCompat.checkSelfPermission(
+                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
+        )!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(
+                    Dashboard_main.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION_PERMISSION
+            );
+        }
+        else {
+            getCurrentLocation();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                getCurrentLocation();
+            }else {
+                Toast.makeText(this,"Permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    private void getCurrentLocation(){
+        LocationRequest locationRequest = new LocationRequest();
+
     }
 
     private void initRecycleViews() {
