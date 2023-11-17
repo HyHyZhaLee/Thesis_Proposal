@@ -1,8 +1,10 @@
 package com.example.androidui_androidstudio.Activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidui_androidstudio.Adapters.HourlyAdapters;
 import com.example.androidui_androidstudio.Domains.Hourly;
 import com.example.androidui_androidstudio.R;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,7 +38,7 @@ public class Dashboard_main extends AppCompatActivity {
     //For weather API
     TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice;
     ImageView imgWeatherStatus;
-
+    public double longitude, latitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +55,7 @@ public class Dashboard_main extends AppCompatActivity {
         txtAQI = findViewById(R.id.textViewAQI);
         txtCity = findViewById(R.id.textViewCity);
         txtAdvice = findViewById(R.id.textViewAdvice);
-
+        //Asking for permission and get the lat + long value
         if(ContextCompat.checkSelfPermission(
                 getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
         )!= PackageManager.PERMISSION_GRANTED){
@@ -62,6 +67,11 @@ public class Dashboard_main extends AppCompatActivity {
         else {
             getCurrentLocation();
         }
+        txtCity.setText(String.format(
+                "Latitude: %s\nLongitude: %s",
+                latitude,
+                longitude
+        ));
     }
 
     @Override
@@ -75,9 +85,26 @@ public class Dashboard_main extends AppCompatActivity {
             }
         }
     }
+    @SuppressLint("MissingPermission")
     private void getCurrentLocation(){
         LocationRequest locationRequest = new LocationRequest();
-
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(3000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        LocationServices.getFusedLocationProviderClient(Dashboard_main.this)
+                .requestLocationUpdates(locationRequest, new LocationCallback(){
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        super.onLocationResult(locationResult);
+                        LocationServices.getFusedLocationProviderClient(Dashboard_main.this)
+                                .removeLocationUpdates(this);
+                        if(locationResult != null && locationResult.getLocations().size() > 0){
+                            int lastestLocationIndex = locationResult.getLocations().size() - 1;
+                            latitude = locationResult.getLocations().get(lastestLocationIndex).getLatitude();
+                            longitude = locationResult.getLocations().get(lastestLocationIndex).getLongitude();
+                        }
+                    }
+                }, Looper.getMainLooper());
     }
 
     private void initRecycleViews() {
