@@ -2,6 +2,7 @@ package com.example.androidui_androidstudio.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
@@ -38,9 +39,11 @@ public class Dashboard_main extends AppCompatActivity {
     //For weather API
     TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice;
     ImageView imgWeatherStatus;
-    public double longitude, latitude;
+//    double longitude, latitude;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sharedPreferences = getSharedPreferences("AppSharedPrefs", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_main);
         updateCurrentTime(); // Add this line to update the time
@@ -67,11 +70,14 @@ public class Dashboard_main extends AppCompatActivity {
         else {
             getCurrentLocation();
         }
-        txtCity.setText(String.format(
-                "Latitude: %s\nLongitude: %s",
-                latitude,
-                longitude
-        ));
+
+        float latitude = sharedPreferences.getFloat("Latitude", 0.0f); // 0.0f is the default value
+        float longitude = sharedPreferences.getFloat("Longitude", 0.0f);
+//        txtCity.setText(String.format(
+//                "Latitude: %s\nLongitude: %s",
+//                latitude,
+//                longitude
+//        ));
     }
 
     @Override
@@ -100,8 +106,13 @@ public class Dashboard_main extends AppCompatActivity {
                                 .removeLocationUpdates(this);
                         if(locationResult != null && locationResult.getLocations().size() > 0){
                             int lastestLocationIndex = locationResult.getLocations().size() - 1;
-                            latitude = locationResult.getLocations().get(lastestLocationIndex).getLatitude();
-                            longitude = locationResult.getLocations().get(lastestLocationIndex).getLongitude();
+                            double latitude = locationResult.getLocations().get(lastestLocationIndex).getLatitude();
+                            double longitude = locationResult.getLocations().get(lastestLocationIndex).getLongitude();
+                            // Saving the location data
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putFloat("Latitude", (float) latitude);
+                            editor.putFloat("Longitude", (float) longitude);
+                            editor.apply();
                         }
                     }
                 }, Looper.getMainLooper());
