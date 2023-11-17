@@ -33,9 +33,6 @@ import java.util.TimeZone;
 
 public class Dashboard_main extends AppCompatActivity {
 
-    private RecyclerView.Adapter adapterHourly;
-    private RecyclerView recyclerView;
-
     //For weather API
     TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice;
     ImageView imgWeatherStatus;
@@ -58,6 +55,7 @@ public class Dashboard_main extends AppCompatActivity {
         txtAQI = findViewById(R.id.textViewAQI);
         txtCity = findViewById(R.id.textViewCity);
         txtAdvice = findViewById(R.id.textViewAdvice);
+        imgWeatherStatus = findViewById(R.id.imageViewWeatherStatus);
         //Asking for permission and get the lat + long value
         if(ContextCompat.checkSelfPermission(
                 getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
@@ -73,11 +71,11 @@ public class Dashboard_main extends AppCompatActivity {
 
         float latitude = sharedPreferences.getFloat("Latitude", 0.0f); // 0.0f is the default value
         float longitude = sharedPreferences.getFloat("Longitude", 0.0f);
-//        txtCity.setText(String.format(
-//                "Latitude: %s\nLongitude: %s",
-//                latitude,
-//                longitude
-//        ));
+        txtCity.setText(String.format(
+                "Latitude: %s\nLongitude: %s",
+                latitude,
+                longitude
+        ));
     }
 
     @Override
@@ -91,7 +89,7 @@ public class Dashboard_main extends AppCompatActivity {
             }
         }
     }
-    @SuppressLint("MissingPermission")
+    @SuppressLint({"MissingPermission", "VisibleForTests"})
     private void getCurrentLocation(){
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
@@ -105,9 +103,9 @@ public class Dashboard_main extends AppCompatActivity {
                         LocationServices.getFusedLocationProviderClient(Dashboard_main.this)
                                 .removeLocationUpdates(this);
                         if(locationResult != null && locationResult.getLocations().size() > 0){
-                            int lastestLocationIndex = locationResult.getLocations().size() - 1;
-                            double latitude = locationResult.getLocations().get(lastestLocationIndex).getLatitude();
-                            double longitude = locationResult.getLocations().get(lastestLocationIndex).getLongitude();
+                            int lastLocationIndex = locationResult.getLocations().size() - 1;
+                            double latitude = locationResult.getLocations().get(lastLocationIndex).getLatitude();
+                            double longitude = locationResult.getLocations().get(lastLocationIndex).getLongitude();
                             // Saving the location data
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putFloat("Latitude", (float) latitude);
@@ -127,10 +125,10 @@ public class Dashboard_main extends AppCompatActivity {
         items.add(new Hourly("13 pm", 32, "storm"));
 
         // This is the correct way to initialize your RecyclerView
-        recyclerView = findViewById(R.id.view1);
+        RecyclerView recyclerView = findViewById(R.id.view1);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        adapterHourly = new HourlyAdapters(items);
+        RecyclerView.Adapter<HourlyAdapters.viewholder> adapterHourly = new HourlyAdapters(items);
         recyclerView.setAdapter(adapterHourly);
     }
 
