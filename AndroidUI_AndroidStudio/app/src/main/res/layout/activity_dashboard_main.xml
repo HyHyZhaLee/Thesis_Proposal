@@ -137,7 +137,7 @@
                             app:srcCompat="@drawable/wind" />
 
                         <TextView
-                            android:id="@+id/textViewWindSpeed"
+                            android:id="@+id/textViewAirPressure"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="loading..."

@@ -58,13 +58,14 @@ public class Dashboard_main extends AppCompatActivity {
     TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice, txtTemperature, txtHumidity, txtAirPressure;
     ImageView imgWeatherStatus;
     SharedPreferences sharedPreferences;
-    PermissionHelper permissionHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreferences = getSharedPreferences("AppSharedPrefs", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_main);
-        permissionHelper.LoopcheckNetworkConnection(Dashboard_main.this);
+
+        PermissionHelper.LoopcheckNetworkConnection(Dashboard_main.this);
+        PermissionHelper.checkGPSPermission(Dashboard_main.this);
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -73,7 +74,6 @@ public class Dashboard_main extends AppCompatActivity {
                 handler.postDelayed(this, 10000); // updates every minute
             }
         };
-
         // Start the initial runnable task by posting through the handler
         handler.post(runnable);
         initRecycleViews();
@@ -88,11 +88,22 @@ public class Dashboard_main extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        permissionHelper.LoopcheckNetworkConnection(Dashboard_main.this);
+        PermissionHelper.LoopcheckNetworkConnection(Dashboard_main.this);
         handler.post(runnable); // restart the handler when activity is back
     }
-
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                getCurrentLocation();
+            }
+        }
+    }
+
+
+
 
     private void weatherRun() {
         txtWeatherStatus = findViewById(R.id.textViewWeatherStatus);
@@ -100,18 +111,12 @@ public class Dashboard_main extends AppCompatActivity {
         txtCity = findViewById(R.id.textViewCity);
         txtAdvice = findViewById(R.id.textViewAdvice);
         imgWeatherStatus = findViewById(R.id.imageViewWeatherStatus);
+
+        txtAirPressure = findViewById(R.id.textViewAirPressure);
+        txtTemperature = findViewById(R.id.textViewTemperature);
+        txtHumidity = findViewById(R.id.textViewHumidity);
         //Asking for permission and get the lat + long value
-        if(ContextCompat.checkSelfPermission(
-                getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
-        )!= PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(
-                    Dashboard_main.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_CODE_LOCATION_PERMISSION
-            );
-        }
-        else {
-            getCurrentLocation();
-        }
+        getCurrentLocation();
 
         float latitude = sharedPreferences.getFloat("Latitude", 0.0f); // 0.0f is the default value
         float longitude = sharedPreferences.getFloat("Longitude", 0.0f);
@@ -120,9 +125,10 @@ public class Dashboard_main extends AppCompatActivity {
         String url ="https://api.openweathermap.org/data/2.5/weather?lat="
                 + latitude
                 + "&lon=" + longitude
-                + "&appid=" + APIKEY;
+                + "&appid=" + APIKEY
+                + "&units=metric";
         RequestQueue requestQueue = Volley.newRequestQueue(Dashboard_main.this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        @SuppressLint("SetTextI18n") StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     Log.d("Testing_log","Result for current weather:" + response);
                     try {
@@ -137,9 +143,14 @@ public class Dashboard_main extends AppCompatActivity {
                                 jsonObject_weather.getString("description")
                             )
                         );
+                        //Update icon
+                        String icon = jsonObject_weather.getString("icon");
                         //Set air pressure
-
                         JSONObject jsonObject_main = jsonObject_respone.getJSONObject("main");
+                        txtAirPressure.setText(jsonObject_main.getString("pressure") + " pHa");
+                        txtTemperature.setText(jsonObject_main.getString("temp") + " °C");
+                        txtHumidity.setText(jsonObject_main.getString("humidity") + " %");
+
 
 
                     } catch (JSONException e) {
@@ -152,17 +163,6 @@ public class Dashboard_main extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0){
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                getCurrentLocation();
-            }else {
-                Toast.makeText(this,"Permission denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
     @SuppressLint({"MissingPermission", "VisibleForTests"})
     private void getCurrentLocation(){
         LocationRequest locationRequest = new LocationRequest();
