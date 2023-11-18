@@ -20,7 +20,7 @@
                 android:id="@+id/textViewWeatherStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mostly Cloudy"
+                android:text="XX"
                 android:layout_marginTop="40dp"
                 android:textAlignment="center"
                 android:textSize="20sp"
@@ -38,7 +38,7 @@
                 android:id="@+id/textViewTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mon June 17 | 10:00 AM"
+                android:text="Time XX"
                 android:textSize="19sp"
                 android:textColor="@color/text_color"
                 android:textAlignment="center"
@@ -57,7 +57,7 @@
                 android:id="@+id/textViewCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ho Chi Minh city"
+                android:text="XX city"
                 android:textSize="19sp"
                 android:textColor="@color/text_color"
                 android:textAlignment="center" />
@@ -94,17 +94,18 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageViewRain"
+                            android:id="@+id/imageViewTemperature"
                             android:layout_width="34dp"
                             android:layout_height="34dp"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/rain" />
+                            android:layout_marginLeft="9dp"
+                            app:srcCompat="@drawable/temp_colored" />
 
                         <TextView
-                            android:id="@+id/textViewRain"
+                            android:id="@+id/textViewTemperature"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="22%"
+                            android:text="XX°C"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
@@ -113,7 +114,7 @@
                             android:id="@+id/textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Rain"
+                            android:text="Temperature"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textStyle="bold"
@@ -139,7 +140,7 @@
                             android:id="@+id/textViewWindSpeed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="22%"
+                            android:text="XXhPa"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
@@ -148,7 +149,7 @@
                             android:id="@+id/textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Wind speed"
+                            android:text="Air pressure"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textStyle="bold"
@@ -174,7 +175,7 @@
                             android:id="@+id/textViewHumidity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="18%"
+                            android:text="XX%"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textStyle="bold" />

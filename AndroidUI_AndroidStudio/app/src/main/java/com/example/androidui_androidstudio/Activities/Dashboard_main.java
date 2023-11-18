@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.androidui_androidstudio.Adapters.HourlyAdapters;
 import com.example.androidui_androidstudio.Domains.Hourly;
 import com.example.androidui_androidstudio.R;
@@ -47,6 +54,24 @@ public class Dashboard_main extends AppCompatActivity {
         initRecycleViews();
         weatherRun();
     }
+    public void getCurrentWeatherData(){
+        float latitude = sharedPreferences.getFloat("Latitude", 0.0f); // 0.0f is the default value
+        float longitude = sharedPreferences.getFloat("Longitude", 0.0f);
+        if(latitude == 0.0f || longitude == 0.0f) return;
+        String url ="https://api.openweathermap.org/data/2.5/weather?lat="
+                + latitude
+                + "&lon=" + longitude
+                + "&appid=558a7a8cae4c5f40fb7685c7d0b2666c";
+        RequestQueue requestQueue = Volley.newRequestQueue(Dashboard_main.this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> {
+                    Log.d("Ket qua",response);
+                }
+                , error -> {
+
+                });
+        requestQueue.add(stringRequest);
+    }
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
@@ -68,14 +93,7 @@ public class Dashboard_main extends AppCompatActivity {
         else {
             getCurrentLocation();
         }
-
-        float latitude = sharedPreferences.getFloat("Latitude", 0.0f); // 0.0f is the default value
-        float longitude = sharedPreferences.getFloat("Longitude", 0.0f);
-        txtCity.setText(String.format(
-                "Latitude: %s\nLongitude: %s",
-                latitude,
-                longitude
-        ));
+        getCurrentWeatherData();
     }
 
     @Override
