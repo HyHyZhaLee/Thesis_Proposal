@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -44,6 +47,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -111,6 +115,7 @@ public class Dashboard_main extends AppCompatActivity {
         txtAQI = findViewById(R.id.textViewAQI);
         txtCity = findViewById(R.id.textViewCity);
         txtAdvice = findViewById(R.id.textViewAdvice);
+        imgWeatherStatus = findViewById(R.id.imageViewWeatherStatus);
 
         txtAirPressure = findViewById(R.id.textViewAirPressure);
         txtTemperature = findViewById(R.id.textViewTemperature);
@@ -145,9 +150,9 @@ public class Dashboard_main extends AppCompatActivity {
                         );
 //                        //Update icon
                         String icon = jsonObject_weather.getString("icon");
-                        updateIconWeather(icon);
-//                        String url_icon = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
-//                        Picasso.with(Dashboard_main.this).load(url_icon).into(imgWeatherStatus);
+                        String resourceName = "img" + icon; // Assuming icon has values like "01d", "02d"...
+                        int resourceId = getResources().getIdentifier(resourceName, "drawable", getPackageName());
+                        imgWeatherStatus.setImageResource(resourceId);
 
                         //Set air pressure
                         JSONObject jsonObject_main = jsonObject_respone.getJSONObject("main");
@@ -169,7 +174,7 @@ public class Dashboard_main extends AppCompatActivity {
 
     private void updateIconWeather(String icon) {
         imgWeatherStatus = findViewById(R.id.imageViewWeatherStatus);
-        if(icon)
+
     }
 
     @SuppressLint({"MissingPermission", "VisibleForTests"})
