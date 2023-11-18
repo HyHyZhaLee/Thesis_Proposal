@@ -38,6 +38,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -110,7 +111,6 @@ public class Dashboard_main extends AppCompatActivity {
         txtAQI = findViewById(R.id.textViewAQI);
         txtCity = findViewById(R.id.textViewCity);
         txtAdvice = findViewById(R.id.textViewAdvice);
-        imgWeatherStatus = findViewById(R.id.imageViewWeatherStatus);
 
         txtAirPressure = findViewById(R.id.textViewAirPressure);
         txtTemperature = findViewById(R.id.textViewTemperature);
@@ -143,8 +143,12 @@ public class Dashboard_main extends AppCompatActivity {
                                 jsonObject_weather.getString("description")
                             )
                         );
-                        //Update icon
+//                        //Update icon
                         String icon = jsonObject_weather.getString("icon");
+                        updateIconWeather(icon);
+//                        String url_icon = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+//                        Picasso.with(Dashboard_main.this).load(url_icon).into(imgWeatherStatus);
+
                         //Set air pressure
                         JSONObject jsonObject_main = jsonObject_respone.getJSONObject("main");
                         txtAirPressure.setText(jsonObject_main.getString("pressure") + " pHa");
@@ -161,6 +165,11 @@ public class Dashboard_main extends AppCompatActivity {
             Log.d("Testing_log","FAILED TO REQUEST GET ON URL!!! ERROR:" + error);
         });
         requestQueue.add(stringRequest);
+    }
+
+    private void updateIconWeather(String icon) {
+        imgWeatherStatus = findViewById(R.id.imageViewWeatherStatus);
+        if(icon)
     }
 
     @SuppressLint({"MissingPermission", "VisibleForTests"})

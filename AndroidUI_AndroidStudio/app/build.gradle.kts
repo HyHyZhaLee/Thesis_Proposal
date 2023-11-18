@@ -45,6 +45,6 @@ dependencies {
     implementation("com.github.hannesa2:paho.mqtt.android:3.3.5")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("com.android.volley:volley:1.2.1")
-    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation("com.squareup.picasso:picasso:2.5.2")
     implementation("com.google.android.gms:play-services-location:17.0.0")
 }
