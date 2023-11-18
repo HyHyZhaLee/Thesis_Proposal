@@ -218,6 +218,21 @@ public class Dashboard_main extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         RecyclerView.Adapter<HourlyAdapters.viewholder> adapterHourly = new HourlyAdapters(items);
         recyclerView.setAdapter(adapterHourly);
+
+
+//        ArrayList<Hourly> items2 = new ArrayList<>();
+//        items2.add(new Hourly("2222 pm", 28, "cloudy"));
+//        items2.add(new Hourly("565 pm", 29, "sunny"));
+//        items2.add(new Hourly("11 pm", 30, "wind"));
+//        items2.add(new Hourly("12 pm", 31, "rainy"));
+//        items2.add(new Hourly("13 pm", 32, "storm"));
+//
+//        // This is the correct way to initialize your RecyclerView
+//        RecyclerView recyclerView2 = findViewById(R.id.view2);
+//
+//        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        RecyclerView.Adapter<HourlyAdapters.viewholder> adapterHourly2 = new HourlyAdapters(items2);
+//        recyclerView2.setAdapter(adapterHourly2);
     }
 
     private void updateCurrentTime() {
