@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +33,9 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +43,9 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class Dashboard_main extends AppCompatActivity {
+
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable;
 
     //For weather API
     TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice;
@@ -50,25 +57,52 @@ public class Dashboard_main extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("AppSharedPrefs", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_main);
-        updateCurrentTime(); // Add this line to update the time
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                updateCurrentTime();
+                handler.postDelayed(this, 10000); // updates every minute
+            }
+        };
+
+        // Start the initial runnable task by posting through the handler
+        handler.post(runnable);
+
         initRecycleViews();
         weatherRun();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable); // stop the handler when activity not visible
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler.post(runnable); // restart the handler when activity is back
     }
     public void getCurrentWeatherData(){
         float latitude = sharedPreferences.getFloat("Latitude", 0.0f); // 0.0f is the default value
         float longitude = sharedPreferences.getFloat("Longitude", 0.0f);
         if(latitude == 0.0f || longitude == 0.0f) return;
+        String APIKEY = "a1d63f18c12b440415"+ "d0791d25cea7e4";
         String url ="https://api.openweathermap.org/data/2.5/weather?lat="
                 + latitude
                 + "&lon=" + longitude
-                + "&appid=558a7a8cae4c5f40fb7685c7d0b2666c";
+                + "&appid=" + APIKEY;
         RequestQueue requestQueue = Volley.newRequestQueue(Dashboard_main.this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
-                    Log.d("Ket qua",response);
+                    Log.d("Testing_log","Result for current weather:" + response);
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(response);
+//                    } catch (JSONException e) {
+//                        throw new RuntimeException(e);
+//                    }
                 }
                 , error -> {
-
+                    Log.d("Testing_log","FAILED TO REQUEST GET ON URL!!! ERROR:" + error);
                 });
         requestQueue.add(stringRequest);
     }
