@@ -32,6 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.androidui_androidstudio.Adapters.HourlyAdapters;
 import com.example.androidui_androidstudio.Domains.Hourly;
+import com.example.androidui_androidstudio.PermissionHelper;
 import com.example.androidui_androidstudio.R;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -57,25 +58,13 @@ public class Dashboard_main extends AppCompatActivity {
     TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice, txtTemperature, txtHumidity, txtAirPressure;
     ImageView imgWeatherStatus;
     SharedPreferences sharedPreferences;
+    PermissionHelper permissionHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreferences = getSharedPreferences("AppSharedPrefs", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_main);
-        if (!isNetworkAvailable()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("No Internet Connection")
-                    .setMessage("Please check your internet connection and try again.")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK button
-                            finish();
-                        }
-                    });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
-        
+        permissionHelper.LoopcheckNetworkConnection(Dashboard_main.this);
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -90,13 +79,6 @@ public class Dashboard_main extends AppCompatActivity {
         initRecycleViews();
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -106,6 +88,7 @@ public class Dashboard_main extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        permissionHelper.LoopcheckNetworkConnection(Dashboard_main.this);
         handler.post(runnable); // restart the handler when activity is back
     }
 

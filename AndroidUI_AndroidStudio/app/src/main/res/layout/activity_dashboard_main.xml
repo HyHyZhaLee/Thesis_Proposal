@@ -20,7 +20,7 @@
                 android:id="@+id/textViewWeatherStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="XX"
+                android:text="loading..."
                 android:layout_marginTop="40dp"
                 android:textAlignment="center"
                 android:textSize="20sp"
@@ -38,7 +38,7 @@
                 android:id="@+id/textViewTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Time XX"
+                android:text="loading..."
                 android:textSize="19sp"
                 android:textColor="@color/text_color"
                 android:textAlignment="center"
@@ -57,7 +57,7 @@
                 android:id="@+id/textViewCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="XX city"
+                android:text="loading..."
                 android:textSize="19sp"
                 android:textColor="@color/text_color"
                 android:textAlignment="center" />
@@ -105,7 +105,7 @@
                             android:id="@+id/textViewTemperature"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="XX°C"
+                            android:text="loading..."
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
@@ -140,7 +140,7 @@
                             android:id="@+id/textViewWindSpeed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="XXhPa"
+                            android:text="loading..."
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
@@ -175,7 +175,7 @@
                             android:id="@+id/textViewHumidity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="XX%"
+                            android:text="loading..."
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
