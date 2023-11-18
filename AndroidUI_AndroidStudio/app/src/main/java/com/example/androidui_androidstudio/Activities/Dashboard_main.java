@@ -2,8 +2,12 @@ package com.example.androidui_androidstudio.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -13,6 +17,7 @@ import android.widget.Toast;
 import android.os.Handler;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -33,6 +38,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,29 +54,49 @@ public class Dashboard_main extends AppCompatActivity {
     private Runnable runnable;
 
     //For weather API
-    TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice;
+    TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice, txtTemperature, txtHumidity, txtAirPressure;
     ImageView imgWeatherStatus;
-//    double longitude, latitude;
     SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreferences = getSharedPreferences("AppSharedPrefs", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_main);
+        if (!isNetworkAvailable()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("No Internet Connection")
+                    .setMessage("Please check your internet connection and try again.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked OK button
+                            finish();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        
         runnable = new Runnable() {
             @Override
             public void run() {
                 updateCurrentTime();
+                weatherRun();
                 handler.postDelayed(this, 10000); // updates every minute
             }
         };
 
         // Start the initial runnable task by posting through the handler
         handler.post(runnable);
-
         initRecycleViews();
-        weatherRun();
     }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -81,30 +107,6 @@ public class Dashboard_main extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         handler.post(runnable); // restart the handler when activity is back
-    }
-    public void getCurrentWeatherData(){
-        float latitude = sharedPreferences.getFloat("Latitude", 0.0f); // 0.0f is the default value
-        float longitude = sharedPreferences.getFloat("Longitude", 0.0f);
-        if(latitude == 0.0f || longitude == 0.0f) return;
-        String APIKEY = "a1d63f18c12b440415"+ "d0791d25cea7e4";
-        String url ="https://api.openweathermap.org/data/2.5/weather?lat="
-                + latitude
-                + "&lon=" + longitude
-                + "&appid=" + APIKEY;
-        RequestQueue requestQueue = Volley.newRequestQueue(Dashboard_main.this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                response -> {
-                    Log.d("Testing_log","Result for current weather:" + response);
-//                    try {
-//                        JSONObject jsonObject = new JSONObject(response);
-//                    } catch (JSONException e) {
-//                        throw new RuntimeException(e);
-//                    }
-                }
-                , error -> {
-                    Log.d("Testing_log","FAILED TO REQUEST GET ON URL!!! ERROR:" + error);
-                });
-        requestQueue.add(stringRequest);
     }
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
@@ -127,7 +129,44 @@ public class Dashboard_main extends AppCompatActivity {
         else {
             getCurrentLocation();
         }
-        getCurrentWeatherData();
+
+        float latitude = sharedPreferences.getFloat("Latitude", 0.0f); // 0.0f is the default value
+        float longitude = sharedPreferences.getFloat("Longitude", 0.0f);
+        if(latitude == 0.0f || longitude == 0.0f) return;
+        String APIKEY = "a1d63f18c12b440415"+ "d0791d25cea7e4";
+        String url ="https://api.openweathermap.org/data/2.5/weather?lat="
+                + latitude
+                + "&lon=" + longitude
+                + "&appid=" + APIKEY;
+        RequestQueue requestQueue = Volley.newRequestQueue(Dashboard_main.this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> {
+                    Log.d("Testing_log","Result for current weather:" + response);
+                    try {
+                        //JSONObject for result
+                        JSONObject jsonObject_respone = new JSONObject(response);
+                        //Set city name
+                        txtCity.setText(jsonObject_respone.getString("name"));
+                        //Set weather
+                        JSONArray jsonArray_weather = jsonObject_respone.getJSONArray("weather");
+                        JSONObject jsonObject_weather = jsonArray_weather.getJSONObject(0);
+                        txtWeatherStatus.setText(capitalizeFirstLetterOfEachWord(
+                                jsonObject_weather.getString("description")
+                            )
+                        );
+                        //Set air pressure
+
+                        JSONObject jsonObject_main = jsonObject_respone.getJSONObject("main");
+
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                , error -> {
+            Log.d("Testing_log","FAILED TO REQUEST GET ON URL!!! ERROR:" + error);
+        });
+        requestQueue.add(stringRequest);
     }
 
     @Override
@@ -197,4 +236,19 @@ public class Dashboard_main extends AppCompatActivity {
         textViewTime.setText(currentTime);
     }
 
+    public String capitalizeFirstLetterOfEachWord(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+
+        StringBuilder capitalizedString = new StringBuilder();
+        String[] words = input.split(" ");
+        for (String word : words) {
+            String firstLetter = word.substring(0, 1).toUpperCase();
+            String remainingLetters = word.substring(1).toLowerCase();
+            capitalizedString.append(firstLetter).append(remainingLetters).append(" ");
+        }
+
+        return capitalizedString.toString().trim(); // trim to remove the last unnecessary space
+    }
 }
