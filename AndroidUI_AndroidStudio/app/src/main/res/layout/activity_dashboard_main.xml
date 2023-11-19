@@ -281,33 +281,42 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
+                        android:orientation="horizontal"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="10"
                         android:layout_margin="8dp"
-                        android:elevation="3dp">
-
-                        <TextView
-                            android:id="@+id/textViewPM2.5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp"
-                            android:text="49.8"
-                            android:textAlignment="center"
-                            android:textColor="#52c784"
-                            android:textSize="28sp" />
-
+                        android:elevation="3dp"
+                        android:paddingLeft="80dp">
                         <TextView
                             android:id="@+id/textView"
-                            android:layout_width="match_parent"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
                             android:text="PM2.5"
                             android:textAlignment="center"
                             android:textColor="@color/text_color"
-                            android:textSize="15sp"
-                            tools:ignore="DuplicateIds" />
+                            android:textSize="20sp"
+                            tools:ignore="DuplicateIds"
+                            android:layout_gravity="center"/>
+                        <ImageView
+                            android:layout_width="30sp"
+                            android:layout_height="match_parent"
+                            android:id="@+id/pointingRight"
+                            app:srcCompat="@drawable/pointing_right"/>
+                        <TextView
+                            android:id="@+id/textViewPM2.5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:text="49.8"
+                            android:textAlignment="center"
+                            android:textColor="#52c784"
+                            android:textSize="28sp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10sp"/>
+
+
                         </LinearLayout>
 
                     </LinearLayout>
