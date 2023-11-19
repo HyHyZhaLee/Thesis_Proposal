@@ -1,7 +1,7 @@
 <shape
     xmlns:android="http://schemas.android.com/apk/res/android">
     <solid
-        android:color="#E9F8F9">
+        android:color="@color/background_color">
     </solid>
 
     <corners

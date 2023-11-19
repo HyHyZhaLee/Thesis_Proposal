@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="Humidity"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color"
                 android:textSize="40sp"
                 android:background="@drawable/frame2"/>
         </LinearLayout>
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:text="Humidity"
                 android:textAlignment="textStart"
-                android:textColor="@color/black" />
+                android:textColor="@color/text_color" />
 
         </LinearLayout>
     </LinearLayout>

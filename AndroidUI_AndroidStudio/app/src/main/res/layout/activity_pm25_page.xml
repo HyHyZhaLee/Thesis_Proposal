@@ -31,9 +31,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PM 2.5"
+                android:text="PM2.5"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color"
                 android:textSize="40sp"
                 android:background="@drawable/frame2"/>
         </LinearLayout>
@@ -63,9 +63,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PM 2.5"
+                android:text="PM2.5"
                 android:textAlignment="textStart"
-                android:textColor="@color/black" />
+                android:textColor="@color/text_color" />
 
         </LinearLayout>
     </LinearLayout>
