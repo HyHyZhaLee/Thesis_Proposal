@@ -1,53 +1,41 @@
 package com.example.androidui_androidstudio.Activities;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.os.Handler;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.androidui_androidstudio.Adapters.HourlyAdapters;
 import com.example.androidui_androidstudio.Domains.Hourly;
+import com.example.androidui_androidstudio.MQTTHelper;
 import com.example.androidui_androidstudio.PermissionHelper;
 import com.example.androidui_androidstudio.R;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.squareup.picasso.Picasso;
 
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,7 +43,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class Dashboard_main extends AppCompatActivity {
-
+    MQTTHelper mqttHelper;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
 
@@ -82,6 +70,32 @@ public class Dashboard_main extends AppCompatActivity {
         // Start the initial runnable task by posting through the handler
         handler.post(runnable);
         initRecycleViews();
+        startMQTT();
+    }
+
+    public void startMQTT() {
+        mqttHelper = new MQTTHelper(this);
+        mqttHelper.setCallback(new MqttCallbackExtended() {
+            @Override
+            public void connectComplete(boolean reconnect, String serverURI) {
+                Log.d("mqtt_log", "Connected!");
+            }
+
+            @Override
+            public void connectionLost(Throwable cause) {
+                Log.d("mqtt_log", "Connection lost...");
+            }
+
+            @Override
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                Log.d("mqtt_log", "Message arrived at topic: " + topic + "; Payload: " + message.toString());
+            }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+                Log.d("mqtt_log", "Delivery Success!");
+            }
+        });
     }
 
     @Override
