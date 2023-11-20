@@ -68,6 +68,7 @@
                 android:textColor="@color/text_color" />
 
         </LinearLayout>
+        
     </LinearLayout>
 
 
