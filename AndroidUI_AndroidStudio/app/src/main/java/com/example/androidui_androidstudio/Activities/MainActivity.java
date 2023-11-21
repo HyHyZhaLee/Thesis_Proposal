@@ -2,6 +2,7 @@ package com.example.androidui_androidstudio.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.content.Intent;
@@ -9,10 +10,22 @@ import android.widget.Button;
 
 import com.example.androidui_androidstudio.MQTTHelper;
 import com.example.androidui_androidstudio.R;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     MQTTHelper mqttHelper;
@@ -48,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
 
         Button btn_o3 = findViewById(R.id.button_o3_page);
         btn_o3.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, O3Page.class)));
+
+        //TEST linechart
+
+
     }
 
     public void startMQTT() {
@@ -74,4 +91,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
