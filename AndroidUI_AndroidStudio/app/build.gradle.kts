@@ -47,4 +47,5 @@ dependencies {
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.squareup.picasso:picasso:2.5.2")
     implementation("com.google.android.gms:play-services-location:17.0.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
