@@ -224,14 +224,14 @@
                     android:textStyle="bold"
                     tools:ignore="DuplicateIds" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textView11"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginEnd="24dp"-->
-<!--                    android:text="Next 7 days"-->
-<!--                    android:textColor="@color/text_color"-->
-<!--                    android:textStyle="bold" />-->
+                <TextView
+                    android:id="@+id/tomorrowBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:text="Next 7 days>"
+                    android:textColor="@color/text_color"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
