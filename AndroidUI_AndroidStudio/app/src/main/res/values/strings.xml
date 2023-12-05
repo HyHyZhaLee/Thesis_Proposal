@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Air Monitoring</string>
+    <string name="title_activity_future">FutureActivity</string>
 </resources>

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -14,6 +15,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,6 +84,12 @@ public class Dashboard_main extends AppCompatActivity {
         // Start the initial runnable task by posting through the handler
         handler.post(runnable);
         initRecycleViews();
+        setVariable();
+    }
+
+    private void setVariable() {
+        TextView next7dayBtn = findViewById(R.id.tomorrowBtn);
+        next7dayBtn.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,FutureActivity.class)));
     }
 
     @Override
