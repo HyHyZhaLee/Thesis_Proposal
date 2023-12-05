@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -15,38 +14,14 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/icon_rounded1"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidUI_AndroidStudio"
         tools:targetApi="31">
         <activity
-            android:name=".O3Page"
-            android:exported="false" />
-        <activity
-            android:name=".COPage"
-            android:exported="false" />
-        <activity
-            android:name=".SO2Page"
-            android:exported="false" />
-        <activity
-            android:name=".CO2Page"
-            android:exported="false" />
-        <activity
-            android:name=".PM25Page"
-            android:exported="false" />
-        <activity
-            android:name=".PM10Page"
-            android:exported="false" />
-        <activity
-            android:name=".HumidPage"
-            android:exported="false" />
-        <activity
-            android:name=".TempPage"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".Activities.Dashboard_main"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +29,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="org.eclipse.paho.android.service.MqttService"/>
+        <activity
+            android:name=".Activities.O3Page"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.COPage"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.SO2Page"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.CO2Page"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.PM25Page"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.PM10Page"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.HumidPage"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.TempPage"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.MainActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>
