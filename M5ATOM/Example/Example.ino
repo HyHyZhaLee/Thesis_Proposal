@@ -12,6 +12,14 @@ MyMQTT myMQTT("mqttserver.tk", "bkair", "bkair_RgPQAZoA5N");
 // Class data json already created
 SENSOR_DATA data;
 
+// Watchdog timer
+hw_timer_t *timer = NULL;
+
+void IRAM_ATTR resetModule() {
+  ets_printf("reboot\n");
+  esp_restart();
+}
+
 void setup() {
   M5.begin(true, false, true);
   Serial2.begin(9600, SERIAL_8N1, 22, 19);
@@ -20,6 +28,12 @@ void setup() {
   myMQTT.subscribe("/bkair/airmonitoring");// Subscribe to the feed
 
   xTaskCreatePinnedToCore(taskGetData, "GetDataTask", 10000, NULL, 1, NULL, 0);
+
+  // Configure the watchdog timer
+  timer = timerBegin(0, 80, true); // 80 divider to get 1MHz clock, true count up
+  timerAttachInterrupt(timer, &resetModule, true); // Attach the reset function
+  timerAlarmWrite(timer, 360000000, false); // Set the alarm time (6 minutes)
+  timerAlarmEnable(timer); // Enable the alarm
 }
 
 float temp = 0, humi = 0, CO = 0, CO2 = 0, SO2 = 0, NO2 = 0, PM25 = 0, PM10 = 0, O3 = 0;
@@ -138,6 +152,8 @@ void taskGetData(void *parameter) {
     String data_to_pub = data.createAQIStationJSON(temp, humi, CO, CO2, SO2, NO2, PM25, PM10, O3);
     myMQTT.publish("/bkair/airmonitoring", data_to_pub);
     TickType_t currentTime = xTaskGetTickCount();
+    // Reset the watchdog timer to prevent a reset
+    timerWrite(timer, 0);
     if (!lastDataTime) {
       lastDataTime = currentTime;
       vTaskDelay(waitTimeInTicks - pdMS_TO_TICKS(10000)); // Delay 5 minutes
