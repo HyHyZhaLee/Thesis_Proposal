@@ -12,7 +12,13 @@ String SENSOR_DATA::floatToString(float value) {
   sprintf(buffer, "%.2f", value);
   return String(buffer);
 }
-
+String SENSOR_DATA::formatTimestamp(time_t timestamp) {
+      char buffer[30]; // Định dạng chuỗi có độ dài tối đa là 30 ký tự
+      sprintf(buffer, "%04d-%02d-%02d %02d:%02d:%02d GMT+0700",
+              year(timestamp), month(timestamp), day(timestamp),
+              hour(timestamp), minute(timestamp), second(timestamp));
+      return String(buffer);
+    }
 String SENSOR_DATA::createAQIStationJSON(float temp, float humi, float co, float co2, float so2, float no2, float pm25, float pm10, float o3) {
   DynamicJsonDocument doc(1024);
 
@@ -20,6 +26,18 @@ String SENSOR_DATA::createAQIStationJSON(float temp, float humi, float co, float
   doc["station_name"] = "BK AIR 0001";
   doc["gps_longitude"] = 106.89;
   doc["gps_latitude"] = 10.5;
+   
+  // Khởi tạo đối tượng UDP để sử dụng với NTP
+  WiFiUDP ntpUDP;
+
+  // Khởi tạo đối tượng NTPClient để lấy thời gian từ máy chủ NTP
+  NTPClient timeClient(ntpUDP);
+  // Lấy thời gian thực từ máy chủ NTP
+  timeClient.begin();
+  timeClient.setTimeOffset(7 * 3600); // Điều chỉnh múi giờ cho múi giờ GMT+7 (Việt Nam)
+  timeClient.update();
+  time_t timestamp = timeClient.getEpochTime();
+  doc["timestamp"] = formatTimestamp(timestamp); // Định dạng timestamp thành chuỗi ngày giờ
 
   JsonArray sensors = doc.createNestedArray("sensors");
 

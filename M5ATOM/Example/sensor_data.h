@@ -10,11 +10,17 @@
 #define INC_SENSOR_DATA_H_
 
 #include <ArduinoJson.h>
+#include <WiFi.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
+#include <TimeLib.h> // Thêm thư viện TimeLib
 
 class SENSOR_DATA{
   public:
     SENSOR_DATA(){};
     String floatToString(float value);
+    String formatTimestamp(time_t timestamp);
+    
     String createAQIStationJSON(float temp, float humi, float co, float co2, float so2, float no2, float pm25, float pm10, float o3);
 };
 
