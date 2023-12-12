@@ -50,7 +50,7 @@ void taskGetData(void *parameter) {
     SENSOR_RS485 data485;
 
     // GET TEMP DATA
-    Serial.println("Writing to temp with data...");
+    // Serial.println("Writing to temp with data...");
     Serial2.write(data485.getTemperature(), 8);
     vTaskDelay(pdMS_TO_TICKS(1000));
     if (Serial2.available()) {
@@ -61,7 +61,7 @@ void taskGetData(void *parameter) {
     }
 
     // GET HUMI DATA
-    Serial.println("Writing to humi with data...");
+    // Serial.println("Writing to humi with data...");
     Serial2.write(data485.getHumidity(), 8);
     vTaskDelay(pdMS_TO_TICKS(1000));
     if (Serial2.available()) {
@@ -72,7 +72,7 @@ void taskGetData(void *parameter) {
     }
 
     // GET CO DATA
-    Serial.println("Writing to CO with data...");
+    // Serial.println("Writing to CO with data...");
     Serial2.write(data485.getCO(), 8);
     vTaskDelay(pdMS_TO_TICKS(1000));
     if (Serial2.available()) {
@@ -83,7 +83,7 @@ void taskGetData(void *parameter) {
     }
 
     // GET CO2 DATA
-    Serial.println("Writing to CO2 with data...");
+    // Serial.println("Writing to CO2 with data...");
     Serial2.write(data485.getCO2(), 8);
     vTaskDelay(pdMS_TO_TICKS(1000));
     if (Serial2.available()) {
@@ -94,7 +94,7 @@ void taskGetData(void *parameter) {
     }
 
     // GET SO2 DATA
-    Serial.println("Writing to SO2 with data...");
+    // Serial.println("Writing to SO2 with data...");
     Serial2.write(data485.getSO2(), 8);
     vTaskDelay(pdMS_TO_TICKS(1000));
     if (Serial2.available()) {
@@ -105,7 +105,7 @@ void taskGetData(void *parameter) {
     }
 
     // GET NO2 DATA
-    Serial.println("Writing to NO2 with data...");
+    // Serial.println("Writing to NO2 with data...");
     Serial2.write(data485.getNO2(), 8);
     vTaskDelay(pdMS_TO_TICKS(1000));
     if (Serial2.available()) {
@@ -116,7 +116,7 @@ void taskGetData(void *parameter) {
     }
 
     // GET PM2.5 DATA
-    Serial.println("Writing to PM2.5 with data...");
+    // Serial.println("Writing to PM2.5 with data...");
     Serial2.write(data485.getPM2_5(), 8);
     vTaskDelay(pdMS_TO_TICKS(1000));
     if (Serial2.available()) {
@@ -127,7 +127,7 @@ void taskGetData(void *parameter) {
     }
 
     // GET PM10 DATA
-    Serial.println("Writing to PM10 with data...");
+    // Serial.println("Writing to PM10 with data...");
     Serial2.write(data485.getPM10(), 8);
     vTaskDelay(pdMS_TO_TICKS(1000));
     if (Serial2.available()) {
@@ -138,7 +138,7 @@ void taskGetData(void *parameter) {
     }
 
     // GET O3 DATA
-    Serial.println("Writing to O3 with data...");
+    // Serial.println("Writing to O3 with data...");
     Serial2.write(data485.getO3(), 8);
     vTaskDelay(pdMS_TO_TICKS(1000));
     if (Serial2.available()) {

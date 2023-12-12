@@ -97,8 +97,8 @@ String SENSOR_DATA::createAQIStationJSON(float temp, float humi, float co, float
 
   String jsonString;
   serializeJson(doc, jsonString);
-  Serial.println("Data to pub:");
-  serializeJsonPretty(doc, Serial);
+  // Serial.println("Data to pub:");
+  // serializeJsonPretty(doc, Serial);
   doc.clear();
   Serial.println();
   return jsonString;
