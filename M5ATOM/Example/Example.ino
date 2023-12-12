@@ -16,7 +16,7 @@ void setup() {
   Serial2.begin(9600, SERIAL_8N1, 22, 19);
   wifi.setupWifi(); // Setup wifi
   myMQTT.connectToMQTT(); // Connect to MQTT server
-  myMQTT.subscribe("/bkair/airmonitoring/");// Subscribe to the feed
+  myMQTT.subscribe("/bkair/airmonitoring");// Subscribe to the feed
 
 }
 
@@ -220,7 +220,7 @@ void loop() {
 
   // String SENSOR_DATA::createAQIStationJSON(float temp, float humi, float co, float co2, float so2, float no2, float pm25, float pm10, float o3)
   data_to_pub = data.createAQIStationJSON(temp,humi,CO, CO2, SO2, NO2, PM25, PM10, O3);
-  myMQTT.publish("/bkair/airmonitoring//", data_to_pub); // Publish to feed
+  myMQTT.publish("/bkair/airmonitoring", data_to_pub); // Publish to feed
   myMQTT.checkConnect();
   delay(300000);
   myMQTT.checkConnect();
