@@ -16,62 +16,64 @@ String SENSOR_DATA::floatToString(float value) {
 String SENSOR_DATA::createAQIStationJSON(float temp, float humi, float co, float co2, float so2, float no2, float pm25, float pm10, float o3) {
   DynamicJsonDocument doc(1024);
 
-  doc["station_id"] = "AQI_0005";
-  doc["station_name"] = "AQI 0005";
+  doc["station_id"] = "bkair_0001";
+  doc["station_name"] = "BK AIR 0001";
+  doc["gps_longitude"] = 106.89;
+  doc["gps_latitude"] = 10.5;
 
   JsonArray sensors = doc.createNestedArray("sensors");
 
   JsonObject temp_sensor = sensors.createNestedObject();
-  temp_sensor["sensor_id"] = "temp_0005";
+  temp_sensor["sensor_id"] = "temp_0001";
   temp_sensor["sensor_name"] = "Nhiệt Độ";
   temp_sensor["sensor_value"] = floatToString(temp);
   temp_sensor["sensor_unit"] = "°C";
 
   JsonObject humi_sensor = sensors.createNestedObject();
-  humi_sensor["sensor_id"] = "humi_0005";
+  humi_sensor["sensor_id"] = "humi_0001";
   humi_sensor["sensor_name"] = "Độ Ẩm";
   humi_sensor["sensor_value"] = floatToString(humi);
   humi_sensor["sensor_unit"] = "%";
 
-  JsonObject co_sensor = sensors.createNestedObject();
-  co_sensor["sensor_id"] = "CO_0005";
-  co_sensor["sensor_name"] = "CO";
-  co_sensor["sensor_value"] = floatToString(co);
-  co_sensor["sensor_unit"] = "ppm";
-
   JsonObject co2_sensor = sensors.createNestedObject();
-  co2_sensor["sensor_id"] = "CO2_0005";
+  co2_sensor["sensor_id"] = "CO2_0001";
   co2_sensor["sensor_name"] = "CO2";
   co2_sensor["sensor_value"] = floatToString(co2);
   co2_sensor["sensor_unit"] = "ppm";
 
+  JsonObject pm25_sensor = sensors.createNestedObject();
+  pm25_sensor["sensor_id"] = "PM25_0001";
+  pm25_sensor["sensor_name"] = "Bụi 2.5";
+  pm25_sensor["sensor_value"] = floatToString(pm25);
+  pm25_sensor["sensor_unit"] = "ppm";
+
+  JsonObject pm10_sensor = sensors.createNestedObject();
+  pm10_sensor["sensor_id"] = "PM10_0001";
+  pm10_sensor["sensor_name"] = "Bụi 10";
+  pm10_sensor["sensor_value"] = floatToString(pm10);
+  pm10_sensor["sensor_unit"] = "ppm";
+
+  JsonObject co_sensor = sensors.createNestedObject();
+  co_sensor["sensor_id"] = "CO_0001";
+  co_sensor["sensor_name"] = "CO";
+  co_sensor["sensor_value"] = floatToString(co);
+  co_sensor["sensor_unit"] = "ppm";
+
   JsonObject so2_sensor = sensors.createNestedObject();
-  so2_sensor["sensor_id"] = "SO2_0005";
+  so2_sensor["sensor_id"] = "SO2_0001";
   so2_sensor["sensor_name"] = "SO2";
   so2_sensor["sensor_value"] = floatToString(so2);
   so2_sensor["sensor_unit"] = "ppm";
 
   JsonObject no2_sensor = sensors.createNestedObject();
-  no2_sensor["sensor_id"] = "NO2_0005";
+  no2_sensor["sensor_id"] = "NO2_0001";
   no2_sensor["sensor_name"] = "NO2";
   no2_sensor["sensor_value"] = floatToString(no2);
   no2_sensor["sensor_unit"] = "ppm";
 
-  JsonObject pm25_sensor = sensors.createNestedObject();
-  pm25_sensor["sensor_id"] = "PM25_0005";
-  pm25_sensor["sensor_name"] = "PM2.5";
-  pm25_sensor["sensor_value"] = floatToString(pm25);
-  pm25_sensor["sensor_unit"] = "ppm";
-
-  JsonObject pm10_sensor = sensors.createNestedObject();
-  pm10_sensor["sensor_id"] = "PM10_0005";
-  pm10_sensor["sensor_name"] = "PM10";
-  pm10_sensor["sensor_value"] = floatToString(pm10);
-  pm10_sensor["sensor_unit"] = "ppm";
-
   JsonObject o3_sensor = sensors.createNestedObject();
-  o3_sensor["sensor_id"] = "O3_0005";
-  o3_sensor["sensor_name"] = "O3";
+  o3_sensor["sensor_id"] = "O3_0001";
+  o3_sensor["sensor_name"] = "Ozone";
   o3_sensor["sensor_value"] = floatToString(o3);
   o3_sensor["sensor_unit"] = "ppm";
 
@@ -83,6 +85,7 @@ String SENSOR_DATA::createAQIStationJSON(float temp, float humi, float co, float
   Serial.println();
   return jsonString;
 }
+
 
 ///////////////////////////////////////
 
