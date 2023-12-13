@@ -49,10 +49,10 @@
   }
   void WatchdogInit(){
     // Configure the watchdog timer
-    timer = timerBegin(0, 80, true); // 80 divider to get 1MHz clock, true count up
-    timerAttachInterrupt(timer, &resetModule, true); // Attach the reset function
-    timerAlarmWrite(timer, 360000000, false); // Set the alarm time (6 minutes)
-    timerAlarmEnable(timer); // Enable the alarm
+    timer = timerBegin(0, 80, true);                    // 80 divider to get 1MHz clock, true count up
+    timerAttachInterrupt(timer, &resetModule, true);    // Attach the reset function
+    timerAlarmWrite(timer, 360000000, false);           // Set the alarm time (6 minutes)
+    timerAlarmEnable(timer);                            // Enable the alarm
   }
   
   float temp = 0, humi = 0, CO = 0, CO2 = 0, SO2 = 0, NO2 = 0, PM25 = 0, PM10 = 0, O3 = 0;
