@@ -307,12 +307,12 @@
                         android:textSize="24sp" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/textViewAQI_timestamp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
+                        android:layout_marginHorizontal="18dp"
                         android:layout_marginTop="4dp"
-                        android:text="Ho Chi Minh city published at 14:00 status:"
+                        android:text="Loading..."
                         android:textSize="14sp" />
 
                     <TextView

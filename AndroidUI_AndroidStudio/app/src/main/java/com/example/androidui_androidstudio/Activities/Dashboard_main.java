@@ -1,58 +1,46 @@
 package com.example.androidui_androidstudio.Activities;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.os.Handler;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.androidui_androidstudio.Adapters.HourlyAdapters;
 import com.example.androidui_androidstudio.Domains.Hourly;
+import com.example.androidui_androidstudio.MQTTHelper;
 import com.example.androidui_androidstudio.PermissionHelper;
 import com.example.androidui_androidstudio.R;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.squareup.picasso.Picasso;
 
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -62,9 +50,12 @@ public class Dashboard_main extends AppCompatActivity {
     private Runnable runnable;
 
     //For weather API
-    TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice, txtTemperature, txtHumidity, txtAirPressure;
+    TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice , txtAirPressure;
+    TextView txtTemperature, txtHumidity, txtPM25, txtPM10, txtSO2, txtNO2, txtO3, txtCO, txtAQItimestamp;
     ImageView imgWeatherStatus;
     SharedPreferences sharedPreferences;
+    MQTTHelper mqttHelper;
+    String MQTT_Payload;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreferences = getSharedPreferences("AppSharedPrefs", MODE_PRIVATE);
@@ -85,8 +76,94 @@ public class Dashboard_main extends AppCompatActivity {
         handler.post(runnable);
         initRecycleViews();
         setVariable();
+        startMQTT();
     }
 
+    public void startMQTT() {
+        mqttHelper = new MQTTHelper(this);
+        mqttHelper.setCallback(new MqttCallbackExtended() {
+            @Override
+            public void connectComplete(boolean reconnect, String serverURI) {
+                Log.d("mqtt_log", "Connected!");
+            }
+            @Override
+            public void connectionLost(Throwable cause) {
+                Log.d("mqtt_log", "Connection lost...");
+            }
+
+            @Override
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                Log.d("mqtt_log", "Message arrived at topic: " + topic + "; Payload: " + message.toString());
+                MQTT_Payload = message.toString();
+                updateAQIValue();
+            }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+                Log.d("mqtt_log", "Delivery Success!");
+            }
+        });
+    }
+
+    public void updateAQIValue() {
+        txtTemperature = findViewById(R.id.textViewTemperature);
+        txtHumidity = findViewById(R.id.textViewHumidity);
+        txtPM25 = findViewById(R.id.textViewPM25);
+        txtPM10 = findViewById(R.id.textViewPM10);
+        txtSO2 = findViewById(R.id.textViewSO2);
+        txtNO2 = findViewById(R.id.textViewNO2);
+        txtO3 = findViewById(R.id.textViewO3);
+        txtCO = findViewById(R.id.textViewCO);
+        txtAQItimestamp = findViewById(R.id.textViewAQI_timestamp);
+        try {
+
+            // Parse chuỗi JSON thành đối tượng JSON
+            JSONObject jsonPayload = new JSONObject(MQTT_Payload);
+
+            // Lấy danh sách các cảm biến
+            JSONArray sensors = jsonPayload.getJSONArray("sensors");
+
+            // Duyệt qua danh sách cảm biến để lấy các giá trị cần thiết
+            for (int i = 0; i < sensors.length(); i++) {
+                JSONObject sensor = sensors.getJSONObject(i);
+                String sensorName = sensor.getString("sensor_name");
+                String sensorValue = sensor.getString("sensor_value");
+                // Lấy thời gian từ chuỗi JSON
+                String timestamp = jsonPayload.getString("timestamp");
+                // Set giá trị cho biến txtAQItimestamp
+                txtAQItimestamp.setText("Lasted update at " + timestamp);
+                // Cập nhật TextView dựa trên tên cảm biến
+                switch (sensorName) {
+                    case "Nhiệt Độ":
+                        txtTemperature.setText(sensorValue);
+                        break;
+                    case "Độ Ẩm":
+                        txtHumidity.setText(sensorValue);
+                        break;
+                    case "Bụi 2.5":
+                        txtPM25.setText(sensorValue);
+                        break;
+                    case "Bụi 10":
+                        txtPM10.setText(sensorValue);
+                        break;
+                    case "SO2":
+                        txtSO2.setText(sensorValue);
+                        break;
+                    case "NO2":
+                        txtNO2.setText(sensorValue);
+                        break;
+                    case "Ozone":
+                        txtO3.setText(sensorValue);
+                        break;
+                    case "CO":
+                        txtCO.setText(sensorValue);
+                        break;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     private void setVariable() {
         TextView next7dayBtn = findViewById(R.id.tomorrowBtn);
         next7dayBtn.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,FutureActivity.class)));
@@ -126,8 +203,8 @@ public class Dashboard_main extends AppCompatActivity {
         imgWeatherStatus = findViewById(R.id.imageViewWeatherStatus);
 
         txtAirPressure = findViewById(R.id.textViewAirPressure);
-        txtTemperature = findViewById(R.id.textViewTemperature);
-        txtHumidity = findViewById(R.id.textViewHumidity);
+//        txtTemperature = findViewById(R.id.textViewTemperature);
+//        txtHumidity = findViewById(R.id.textViewHumidity);
         //Asking for permission and get the lat + long value
         getCurrentLocation();
 
@@ -165,8 +242,8 @@ public class Dashboard_main extends AppCompatActivity {
                         //Set air pressure
                         JSONObject jsonObject_main = jsonObject_respone.getJSONObject("main");
                         txtAirPressure.setText(jsonObject_main.getString("pressure") + " pHa");
-                        txtTemperature.setText(jsonObject_main.getString("temp") + " °C");
-                        txtHumidity.setText(jsonObject_main.getString("humidity") + " %");
+//                        txtTemperature.setText(jsonObject_main.getString("temp") + " °C");
+//                        txtHumidity.setText(jsonObject_main.getString("humidity") + " %");
 
 
 
