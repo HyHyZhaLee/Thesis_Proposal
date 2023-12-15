@@ -29,6 +29,8 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
@@ -56,6 +58,7 @@ public class Dashboard_main extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     MQTTHelper mqttHelper;
     String MQTT_Payload;
+    DatabaseReference myRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreferences = getSharedPreferences("AppSharedPrefs", MODE_PRIVATE);
@@ -77,7 +80,26 @@ public class Dashboard_main extends AppCompatActivity {
         initRecycleViews();
         setVariable();
         startMQTT();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        myRef.setValue("Hello World");
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable); // stop the handler when activity not visible
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PermissionHelper.LoopcheckNetworkConnection(Dashboard_main.this);
+        handler.post(runnable); // restart the handler when activity is back
+    }
+
+
+
 
     public void startMQTT() {
         mqttHelper = new MQTTHelper(this);
@@ -95,6 +117,7 @@ public class Dashboard_main extends AppCompatActivity {
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 Log.d("mqtt_log", "Message arrived at topic: " + topic + "; Payload: " + message.toString());
                 MQTT_Payload = message.toString();
+//                myRef.setValue(message);
                 updateAQIValue();
             }
 
@@ -119,7 +142,6 @@ public class Dashboard_main extends AppCompatActivity {
 
             // Parse chuỗi JSON thành đối tượng JSON
             JSONObject jsonPayload = new JSONObject(MQTT_Payload);
-
             // Lấy danh sách các cảm biến
             JSONArray sensors = jsonPayload.getJSONArray("sensors");
 
@@ -169,18 +191,6 @@ public class Dashboard_main extends AppCompatActivity {
         next7dayBtn.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,FutureActivity.class)));
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        handler.removeCallbacks(runnable); // stop the handler when activity not visible
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        PermissionHelper.LoopcheckNetworkConnection(Dashboard_main.this);
-        handler.post(runnable); // restart the handler when activity is back
-    }
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -255,11 +265,6 @@ public class Dashboard_main extends AppCompatActivity {
             Log.d("Testing_log","FAILED TO REQUEST GET ON URL!!! ERROR:" + error);
         });
         requestQueue.add(stringRequest);
-    }
-
-    private void updateIconWeather(String icon) {
-        imgWeatherStatus = findViewById(R.id.imageViewWeatherStatus);
-
     }
 
     @SuppressLint({"MissingPermission", "VisibleForTests"})
