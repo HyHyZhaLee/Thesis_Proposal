@@ -93,7 +93,7 @@
         uint8_t receivedData[7];
         Serial2.readBytes(receivedData, sizeof(receivedData));
         CO = (int)receivedData[3] * 256 + (int)receivedData[4];
-        CO /= 10;
+        // CO /= 10;
       }
 
       // GET CO2 DATA
@@ -104,7 +104,7 @@
         uint8_t receivedData[7];
         Serial2.readBytes(receivedData, sizeof(receivedData));
         CO2 = (int)receivedData[3] * 256 + (int)receivedData[4];
-        CO2 /= 10;
+        // CO2 /= 10;
       }
 
       // GET SO2 DATA
@@ -115,7 +115,7 @@
         uint8_t receivedData[7];
         Serial2.readBytes(receivedData, sizeof(receivedData));
         SO2 = (int)receivedData[3] * 256 + (int)receivedData[4];
-        SO2 /= 10;
+        // SO2 /= 10;
       }
 
       // GET NO2 DATA
@@ -126,7 +126,7 @@
         uint8_t receivedData[7];
         Serial2.readBytes(receivedData, sizeof(receivedData));
         NO2 = (int)receivedData[3] * 256 + (int)receivedData[4];
-        NO2 /= 10;
+        // NO2 /= 10;
       }
 
       // GET PM2.5 DATA
@@ -137,7 +137,7 @@
         uint8_t receivedData[7];
         Serial2.readBytes(receivedData, sizeof(receivedData));
         PM25 = (int)receivedData[3] * 256 + (int)receivedData[4];
-        PM25 /= 10;
+        // PM25 /= 10;
       }
 
       // GET PM10 DATA
@@ -148,7 +148,7 @@
         uint8_t receivedData[7];
         Serial2.readBytes(receivedData, sizeof(receivedData));
         PM10 = (int)receivedData[3] * 256 + (int)receivedData[4];
-        PM10 /= 10;
+        // PM10 /= 10;
       }
 
       // GET O3 DATA
@@ -159,7 +159,7 @@
         uint8_t receivedData[7];
         Serial2.readBytes(receivedData, sizeof(receivedData));
         O3 = (int)receivedData[3] * 256 + (int)receivedData[4];
-        O3 /= 10;
+        // O3 /= 10;
       }
       vTaskDelay(pdMS_TO_TICKS(1000));
       
