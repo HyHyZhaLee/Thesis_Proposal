@@ -4,6 +4,7 @@ from firebase_admin import credentials
 from firebase_admin import db
 import json
 import re
+from datetime import datetime
 
 # Khởi tạo Firebase
 cred = credentials.Certificate("firebase-key.json")
@@ -35,7 +36,17 @@ def on_message(client, userdata, msg):
     # Lấy và chuẩn hóa timestamp
     timestamp = data.get('timestamp')
     if timestamp:
+        # Chuyển đổi timestamp thành đối tượng datetime để dễ dàng so sánh
+        datetime_obj = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S %Z%z")
+
+        # Kiểm tra nếu năm nhỏ hơn 2010
+        if datetime_obj.year < 2010:
+            # Nếu năm nhỏ hơn 2010, không ghi dữ liệu vào Firebase
+            print("Dữ liệu có năm nhỏ hơn 2010, không ghi vào Firebase.")
+            return
+
         normalized_date, normalized_time = normalize_timestamp(timestamp)
+        # Ghi dữ liệu vào Firebase
         db.reference(f"/airmonitoring/{normalized_date}/{normalized_time}" + "_GMT_0700").set(data)
 
 
