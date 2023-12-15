@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "database-for-air-monitoring",
+  "private_key_id": "f614b9f03772e535fba92a549bf41fb70b58f89d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDj3bCuBST8RSE5\ntKX/ofPmsjlerHbzD0RUMeuMDE9HifdGnhLTd7r8DT1Gl29Pwhjy8lXNPnMdDK9b\nKCrgye4ltMjij6c+4SIeiEcg2Iu+fXOKF9Hu/cjtev0ExQ3HGmEeAWiA/bJZ6jlu\nvpSBAO+GW9gXWgZJWGpa8LSOE2IZwsSEV8S2Zj4xILtQgbnRIAbzxJXoSF/v/bZ7\ne5o5VIm3IlVvhVtcCKD9jxAsefTbO1u/K4nyP5qGI36ZUtldaoqCKIWzwAJWO+0X\n33Rv2sfrvrlV9abd+kOPTUP0d5xqaFa4DcSktTlf532LhjW/41lwADQzuIKUs819\nDZuI/uYdAgMBAAECggEAIXo2FXMLCocriPtZ8hM8rrWbiSXEehRRoR8OcK50TVnf\nOwBJWsk57wMQ8BiakXi+Sp9A7N0Sc3+kGbvuhMUWGHMVmnephir0ZND3xkMaUNvE\niFLUlIyzovRRTQyYaBqfjxV84YqkU+J+Gp+kWMmm5zICLvgaeVcklQTNOhxt6sO0\nIzZj4gNbRgQBbVc1Tg17QltujwZdpzQUCF4rSoO1jduHWZp6wPtm0MLvort4G5Yi\nUvVdnqavGel0gamA4jTnYhVCX36nwYQObQUNRXv2THCFkZMZRyq8jiao5R1t8kWo\nZfGCfNSXEm5GME32UUP8lrw+FSRki8xcPVzK1l5BkQKBgQD+m/m7e+SZsc8fjle9\ntxg6Pygom43OyQcg5mg0A2WEexZJgNKHQnjbVZT6A6nvfXaJJ/J9UOwS+PruxHx/\ngq6HGnNAhYlkOw2xuW+94FAcZrUCwHfmtAKcnIxwyRCPCGsXPXLwvKVCHi4tsoMA\nuoWCDtCD9on7vDfMdDZcBXdXlQKBgQDlHFGrk2jQt1TrjWWkzqWJT1VR/snxekvb\nshPfpTCmg5RDauGPbLy5WuELLJk6V0L/QXIeKhJ9O5lcywoaUUSomFVQ9yY/Bh1j\n349wFsYjpUssCF9TLHrDfkDbXVNgL1Y7io9UlQN1e0Ail+HBqf1fIXXAgB31I8iJ\nK82GZHWSaQKBgG8ITiv4p4RvCkhUpubRBfvAtx6eV4UqHbW3RRIJuSfBFcMQLr9V\nuabM957gIieSqzK8/P6xX4IWmjet8C0bLEk2u7QTiArxxdMPby96tvTrxVxh2uf8\n8Hajvosg49u8bBdCcPGTEu52guTiyEZ1EOva0gv6Y8ooFp1OwLX4nEbRAoGAdBTO\nGGV+pMlOoG4qwr7kxlZIv1udi9jP2Ic4ZIb4yFVAaIwdrqKEWFGAVj4JgLK3wkax\ngDEG3ya0RHynKMBmThmomHYwjZwWhgS+Uydmyqa0GKJBUg3mQWiVic+WL9SsF0zT\n5CH/96Uz0JMtkgcD1hBI7fi7tPmlYEKuRlpd64kCgYAFd5sdxoMy4VdHLLvjgfpV\neQHl97VWZq2m9MMNePCpSR/c/p/Dg+ySZvIwuzd8dzcfyUvbkwPpENLyEZABobA1\noIl/To0rR1egKRTUte/K2mKrdBgmz5vvHcxb0l9E7f3r8a6h4DdlF1I/KjTwruhS\niccZjHLprOLUQ47iJIWM4A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-bo0z7@database-for-air-monitoring.iam.gserviceaccount.com",
+  "client_id": "112499329960654887105",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-bo0z7%40database-for-air-monitoring.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
