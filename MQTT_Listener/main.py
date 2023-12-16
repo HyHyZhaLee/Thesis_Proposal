@@ -1,3 +1,14 @@
+# To deploy use these cmd:
+# heroku login
+# git init
+# git add .
+# heroku create
+# git commit -m "another version"
+# git push heroku master
+# heroku ps:scale worker=1
+
+
+
 import paho.mqtt.client as mqtt
 import firebase_admin
 from firebase_admin import credentials
