@@ -44,10 +44,10 @@ def on_message(client, userdata, msg):
             # Nếu năm nhỏ hơn 2010, không ghi dữ liệu vào Firebase
             print("Dữ liệu có năm nhỏ hơn 2010, không ghi vào Firebase.")
             return
-
         normalized_date, normalized_time = normalize_timestamp(timestamp)
+        print(normalized_date)
         # Ghi dữ liệu vào Firebase
-        db.reference(f"/airmonitoring/{normalized_date}/{normalized_time}" + "_GMT_0700").set(data)
+        # db.reference(f"/airmonitoring/{normalized_date}/{normalized_time}" + "_GMT_0700").set(data)
 
 
 # Kết nối với MQTT Server
