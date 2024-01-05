@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import com.example.androidui_androidstudio.R;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -103,7 +104,7 @@ public class HistoryPage extends AppCompatActivity {
         // Prepare the entries for hourly data points
         List<Entry> hourlyEntries = new ArrayList<>();
         for (int i = 0; i < entries.size(); i++) {
-            if (i % 13 == 0) { // Assuming one data point per 5 minutes, so every 12th data point is hourly
+            if (i % 12 == 0) { // Assuming one data point per 5 minutes, so every 12th data point is hourly
                 hourlyEntries.add(entries.get(i));
             }
             else if(i == entries.size()-1) hourlyEntries.add(entries.get(i));
@@ -113,18 +114,19 @@ public class HistoryPage extends AppCompatActivity {
         LineDataSet allDataSet = new LineDataSet(entries, "Temperature");
         allDataSet.setDrawCircles(false);
         allDataSet.setDrawValues(false); // Optionally disable the drawing of values
+        allDataSet.setColor(Color.parseColor("#AA00FF"));
 
         // Customize the data set for hourly entries to draw circles
         LineDataSet hourlyDataSet = new LineDataSet(hourlyEntries, "Hourly Temperature");
+
         // Apply styling
-        hourlyDataSet.setLineWidth(0f);
-        allDataSet.setColor(Color.parseColor("#AA00FF"));
         hourlyDataSet.setCircleColor(Color.parseColor("#AA00FF"));
         hourlyDataSet.setCircleRadius(6f);
         hourlyDataSet.setCircleHoleRadius(3f);
         hourlyDataSet.setDrawCircleHole(true);
         hourlyDataSet.setDrawCircles(true);
-
+        hourlyDataSet.setDrawValues(true);
+        hourlyDataSet.setLineWidth(0.2f);
         // Combine both data sets
         LineData data = new LineData();
         data.addDataSet(allDataSet);
@@ -139,9 +141,9 @@ public class HistoryPage extends AppCompatActivity {
         xAxis.setValueFormatter(new IndexAxisValueFormatter(times));
         xAxis.setGranularity(1f); // Only show labels for each entry
         xAxis.setDrawGridLines(false);
-        xAxis.setDrawAxisLine(false);
+//        xAxis.setDrawAxisLine(false);
         xAxis.setTextColor(Color.GRAY);
-        xAxis.setGranularity(1f); // Only show labels for each entry
+        xAxis.setYOffset(10f); // Adjust this value to move the X-axis labels up or down
 
         // Customize the Y Axis (Left)
         YAxis leftAxis = lineChart.getAxisLeft();
@@ -159,6 +161,16 @@ public class HistoryPage extends AppCompatActivity {
         // Customize the Y Axis (Right)
         YAxis rightAxis = lineChart.getAxisRight();
         rightAxis.setEnabled(false);
+
+        // Adjust the Legend position
+        lineChart.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        lineChart.getLegend().setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        lineChart.getLegend().setDrawInside(false);
+        lineChart.getLegend().setYOffset(5f); // Adjust this value to move the legend up or down
+
+        // Adjust extra bottom offset to make space for X-axis labels and legend
+        lineChart.setExtraBottomOffset(10f);
+
         // Other customizations like axis colors, line width, etc., remain the same...
         lineChart.getDescription().setEnabled(false);        // Remove description label
 
