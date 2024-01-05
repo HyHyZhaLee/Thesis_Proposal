@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -98,7 +99,17 @@ public class Dashboard_main extends AppCompatActivity {
         handler.post(runnable); // restart the handler when activity is back
     }
 
+    private void setVariable() {
+        TextView next7dayBtn = findViewById(R.id.tomorrowBtn);
+        next7dayBtn.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,FutureActivity.class)));
 
+        TextView HistoryLogBtn1;
+        LinearLayout HistoryLogBtn2;
+        HistoryLogBtn1 = findViewById(R.id.HistoryLogBtn1);
+        HistoryLogBtn2 = findViewById(R.id.HistoryLogBtn2);
+        HistoryLogBtn1.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,HistoryPage.class)));
+        HistoryLogBtn2.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,HistoryPage.class)));
+    }
 
 
     public void startMQTT() {
@@ -186,10 +197,7 @@ public class Dashboard_main extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    private void setVariable() {
-        TextView next7dayBtn = findViewById(R.id.tomorrowBtn);
-        next7dayBtn.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,FutureActivity.class)));
-    }
+
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     @Override

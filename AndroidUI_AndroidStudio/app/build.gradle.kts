@@ -73,6 +73,7 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.5.2")
     implementation("com.google.android.gms:play-services-location:17.0.0")
     implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")

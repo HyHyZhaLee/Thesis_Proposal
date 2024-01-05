@@ -6,8 +6,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.security.identity.CredentialDataResult;
-
 import com.example.androidui_androidstudio.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -54,7 +52,7 @@ public class HistoryPage extends AppCompatActivity {
         leftAxis.setDrawAxisLine(false); // No axis line
         leftAxis.setTextColor(Color.GRAY); // Set the color of labels
         leftAxis.setAxisMinimum(0f); // Minimum value for Y
-        leftAxis.setAxisMaximum(60f); // Maximum value for Y
+        leftAxis.setAxisMaximum(100f); // Maximum value for Y
         leftAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
@@ -69,35 +67,10 @@ public class HistoryPage extends AppCompatActivity {
 
         // Set up the data points
         List<Entry> entries = new ArrayList<>();
-
-//        entries.add(new Entry(0f, 30.00f)); //9pm
-//        entries.add(new Entry(0.5f, 29.90f));
-//        entries.add(new Entry(1f, 29.40f)); //10pm
-//        entries.add(new Entry(1.5f, 29.10f));
-//        entries.add(new Entry(2f, 28.90f)); //11pm
-//        entries.add(new Entry(2.5f, 28.70f));
-//        entries.add(new Entry(3f, 28.60f)); //00am
-//        entries.add(new Entry(3.5f, 28.60f));
-//        entries.add(new Entry(4.0f, 28.40f)); //1am
-//        entries.add(new Entry(4.5f, 28.30f));
-//        entries.add(new Entry(5.0f, 28.10f)); //2am
-//        entries.add(new Entry(5.5f, 28.0f));  // 2:30 AM
-//        entries.add(new Entry(6.0f, 27.8f));
-//        entries.add(new Entry(6.5f, 27.7f));
-//        entries.add(new Entry(7.0f, 27.7f));
-//        entries.add(new Entry(7.5f, 27.6f));
-//        entries.add(new Entry(8.0f, 27.5f));
-//        entries.add(new Entry(8.5f, 27.5f));
-//        entries.add(new Entry(9.0f, 27.3f));
-//        entries.add(new Entry(9.5f, 27.1f));
-//        entries.add(new Entry(10.0f, 30.0f)); // 3:30 AM
-//        entries.add(new Entry(10.5f, 30.7f));
-//        entries.add(new Entry(11.0f, 32.6f));
-//        entries.add(new Entry(11.5f, 32.5f));
-//        entries.add(new Entry(12.0f, 33.2f));
-//        entries.add(new Entry(12.5f, 34.2f));
-
-
+        for (int i = 0; i < times.length; i++) {
+            // Add dummy data points
+            entries.add(new Entry(i, (float) (Math.random() * 100))); // Random values for demonstration
+        }
 
         // Customize the data set
         LineDataSet dataSet = new LineDataSet(entries, "Temperature");
