@@ -104,16 +104,23 @@ public class HistoryPage extends AppCompatActivity {
         // Prepare the entries for hourly data points
         List<Entry> hourlyEntries = new ArrayList<>();
         for (int i = 0; i < entries.size(); i++) {
-            if (i % 12 == 0) { // Assuming one data point per 5 minutes, so every 12th data point is hourly
-                hourlyEntries.add(entries.get(i));
-            }
-            else if(i == entries.size()-1) {
+            if(i == entries.size()-1 || i == 0) {
                 hourlyEntries.add(entries.get(i));
             }
             else if(entries.get(i).getY() == maxTemp || entries.get(i).getY() == minTemp) {
                 // Add entries that have maximum or minimum temperature
                 hourlyEntries.add(entries.get(i));
             }
+            else if(i%12 == 0){
+                hourlyEntries.add(entries.get(i));
+            }
+            //Mark extreme value here
+//            else {
+//                float left = entries.get(i-1).getY();
+//                float mid = entries.get(i).getY();
+//                float right = entries.get(i+1).getY();
+//                if(left<mid && mid > right || left>mid && mid < right) hourlyEntries.add(entries.get(i));
+//            }
         }
 
 
