@@ -98,8 +98,8 @@ public class HistoryPage extends AppCompatActivity {
         }
 
         // Set the max and min for the Y-axis
-        float yAxisMax = maxTemp + 10;
-        float yAxisMin = minTemp - 10;
+        float yAxisMax = maxTemp + 1;
+        float yAxisMin = minTemp - 1;
 
         // Prepare the entries for hourly data points
         List<Entry> hourlyEntries = new ArrayList<>();
@@ -107,8 +107,15 @@ public class HistoryPage extends AppCompatActivity {
             if (i % 12 == 0) { // Assuming one data point per 5 minutes, so every 12th data point is hourly
                 hourlyEntries.add(entries.get(i));
             }
-            else if(i == entries.size()-1) hourlyEntries.add(entries.get(i));
+            else if(i == entries.size()-1) {
+                hourlyEntries.add(entries.get(i));
+            }
+            else if(entries.get(i).getY() == maxTemp || entries.get(i).getY() == minTemp) {
+                // Add entries that have maximum or minimum temperature
+                hourlyEntries.add(entries.get(i));
+            }
         }
+
 
         // Create the data set for all entries but disable the drawing of circles
         LineDataSet allDataSet = new LineDataSet(entries, "Temperature");
