@@ -38,15 +38,95 @@ public class HistoryPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_page);
         setVariable();
-//        lineChart = findViewById(R.id.chartTemperature);
 
         // Initialize Firebase Database Reference
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         // Retrieve the latest temperature data
         retrieveLatestTemperatureData();
-//        lineChart = findViewById(R.id.chartHumidity);
         retrieveLatestHumidityData();
+        retrieveLatestPM10Data();
+        retrieveLatestPM25Data();
+    }
+
+    private void retrieveLatestPM25Data() {
+        DatabaseReference pm25Ref = databaseReference.child("airmonitoringV2").child("PM25");
+        LineChart lineChart = findViewById(R.id.chartPM25);
+        pm25Ref.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Float> latestPM25Data = new HashMap<>();
+                    List<Entry> entries = new ArrayList<>();
+                    List<String> times = new ArrayList<>();
+                    int index = 0;
+
+                    for (DataSnapshot dateSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot timeSnapshot : dateSnapshot.getChildren()) {
+                            String time = timeSnapshot.getKey();
+                            String pm25String = timeSnapshot.getValue(String.class);
+                            try {
+                                Float pm25Value = Float.parseFloat(pm25String);
+                                latestPM25Data.put(time, pm25Value);
+                                times.add(time); // This list will hold time strings like "00:05", "00:10", etc.
+                                entries.add(new Entry(index, pm25Value));
+                                index++;
+                            } catch (NumberFormatException e) {
+                                // Handle the case where the string cannot be parsed as a float
+                            }
+                        }
+                    }
+
+                    // Update the chart on the main UI thread
+                    runOnUiThread(() -> updateChart(times, entries, lineChart));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors
+            }
+        });
+    }
+
+    private void retrieveLatestPM10Data() {
+        DatabaseReference pm10Ref = databaseReference.child("airmonitoringV2").child("PM10");
+        LineChart lineChart = findViewById(R.id.chartPM10);
+        pm10Ref.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Float> latestPM10Data = new HashMap<>();
+                    List<Entry> entries = new ArrayList<>();
+                    List<String> times = new ArrayList<>();
+                    int index = 0;
+
+                    for (DataSnapshot dateSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot timeSnapshot : dateSnapshot.getChildren()) {
+                            String time = timeSnapshot.getKey();
+                            String pm10String = timeSnapshot.getValue(String.class);
+                            try {
+                                Float pm10Value = Float.parseFloat(pm10String);
+                                latestPM10Data.put(time, pm10Value);
+                                times.add(time); // This list will hold time strings like "00:05", "00:10", etc.
+                                entries.add(new Entry(index, pm10Value));
+                                index++;
+                            } catch (NumberFormatException e) {
+                                // Handle the case where the string cannot be parsed as a float
+                            }
+                        }
+                    }
+
+                    // Update the chart on the main UI thread
+                    runOnUiThread(() -> updateChart(times, entries, lineChart));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors
+            }
+        });
     }
 
     private void retrieveLatestHumidityData() {
@@ -211,7 +291,7 @@ public class HistoryPage extends AppCompatActivity {
         leftAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return String.format("%.1f °C", value);
+                return String.format("%.1f", value);
             }
         });
         // Customize the Y Axis (Right)
