@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background_color">#FBF6FF</color>
     <color name="text_color">#331866</color>
+    <color name="text_AQI">#ffba4e</color>
+
 </resources>

@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HistoryPage extends AppCompatActivity {
-    private LineChart lineChart;
+//    private LineChart lineChart;
     private DatabaseReference databaseReference;
 
     @Override
@@ -38,19 +38,61 @@ public class HistoryPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_page);
         setVariable();
-        lineChart = findViewById(R.id.chartTemperature);
+//        lineChart = findViewById(R.id.chartTemperature);
 
         // Initialize Firebase Database Reference
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         // Retrieve the latest temperature data
         retrieveLatestTemperatureData();
+//        lineChart = findViewById(R.id.chartHumidity);
+        retrieveLatestHumidityData();
+    }
+
+    private void retrieveLatestHumidityData() {
+        DatabaseReference humidityRef = databaseReference.child("airmonitoringV2").child("Humidity");
+        LineChart lineChart = findViewById(R.id.chartHumidity);
+        humidityRef.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Float> latestHumidities = new HashMap<>();
+                    List<Entry> entries = new ArrayList<>();
+                    List<String> times = new ArrayList<>();
+                    int index = 0;
+
+                    for (DataSnapshot dateSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot timeSnapshot : dateSnapshot.getChildren()) {
+                            String time = timeSnapshot.getKey();
+                            String humidityString = timeSnapshot.getValue(String.class);
+                            try {
+                                Float humidity = Float.parseFloat(humidityString);
+                                latestHumidities.put(time, humidity);
+                                times.add(time); // This list will hold time strings like "00:05", "00:10", etc.
+                                entries.add(new Entry(index, humidity));
+                                index++;
+                            } catch (NumberFormatException e) {
+                                // Handle the case where the string cannot be parsed as a float
+                            }
+                        }
+                    }
+
+                    // Update the chart on the main UI thread
+                    runOnUiThread(() -> updateChart(times, entries,lineChart));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors
+            }
+        });
     }
 
 
     private void retrieveLatestTemperatureData() {
         DatabaseReference tempRef = databaseReference.child("airmonitoringV2").child("Temperature");
-
+        LineChart lineChart = findViewById(R.id.chartTemperature);
         tempRef.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -77,7 +119,7 @@ public class HistoryPage extends AppCompatActivity {
                     }
 
                     // Update the chart on the main UI thread
-                    runOnUiThread(() -> updateChart(times, entries));
+                    runOnUiThread(() -> updateChart(times, entries,lineChart));
                 }
             }
 
@@ -88,7 +130,7 @@ public class HistoryPage extends AppCompatActivity {
         });
     }
 
-    private void updateChart(List<String> times, List<Entry> entries) {
+    private void updateChart(List<String> times, List<Entry> entries, LineChart lineChart) {
         // Calculate the maximum and minimum values from the entries
         float maxTemp = -Float.MAX_VALUE;
         float minTemp = Float.MAX_VALUE;
