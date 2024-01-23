@@ -5,7 +5,7 @@
 
 ## Initialize a git repository in a new or existing directory
 - git init
-- heroku git:remote -a mqtt-listener-air-monitoring
+- heroku git:remote -a mqtt-listener-air-monitoringv2
 
 ## Deploy your applicationCommit your code to the repository and deploy it to Heroku using Git.
 - git add .

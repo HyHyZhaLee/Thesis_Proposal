@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 
 public class HistoryPage extends AppCompatActivity {
-//    private LineChart lineChart;
     private DatabaseReference databaseReference;
 
     @Override
