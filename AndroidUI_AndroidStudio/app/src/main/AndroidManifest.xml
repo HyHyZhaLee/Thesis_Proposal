@@ -37,33 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activities.O3Page"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.COPage"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.SO2Page"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.CO2Page"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.PM25Page"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.PM10Page"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.HumidPage"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.TempPage"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.MainActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
