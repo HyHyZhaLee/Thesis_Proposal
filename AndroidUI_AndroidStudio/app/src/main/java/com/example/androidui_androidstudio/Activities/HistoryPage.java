@@ -46,6 +46,11 @@ public class HistoryPage extends AppCompatActivity {
         retrieveLatestHumidityData();
         retrieveLatestPM10Data();
         retrieveLatestPM25Data();
+        retrieveLatestSO2Data();
+        retrieveLatestCOData();
+        retrieveLatestCO2Data();
+        retrieveLatestNO2Data();
+        retrieveLatestO3Data();
     }
 
     private void retrieveLatestPM25Data() {
@@ -168,7 +173,6 @@ public class HistoryPage extends AppCompatActivity {
         });
     }
 
-
     private void retrieveLatestTemperatureData() {
         DatabaseReference tempRef = databaseReference.child("airmonitoringV2").child("Temperature");
         LineChart lineChart = findViewById(R.id.chartTemperature);
@@ -208,6 +212,207 @@ public class HistoryPage extends AppCompatActivity {
             }
         });
     }
+
+    private void retrieveLatestSO2Data() {
+        DatabaseReference so2Ref = databaseReference.child("airmonitoringV2").child("SO2");
+        LineChart lineChart = findViewById(R.id.chartSO2);
+        so2Ref.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Float> latestSO2 = new HashMap<>();
+                    List<Entry> entries = new ArrayList<>();
+                    List<String> times = new ArrayList<>();
+                    int index = 0;
+
+                    for (DataSnapshot dateSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot timeSnapshot : dateSnapshot.getChildren()) {
+                            String time = timeSnapshot.getKey();
+                            String SO2String = timeSnapshot.getValue(String.class);
+                            try {
+                                Float so2 = Float.parseFloat(SO2String);
+                                latestSO2.put(time, so2);
+                                times.add(time); // This list will hold time strings like "00:05", "00:10", etc.
+                                entries.add(new Entry(index, so2));
+                                index++;
+                            } catch (NumberFormatException e) {
+                                // Handle the case where the string cannot be parsed as a float
+                            }
+                        }
+                    }
+
+                    // Update the chart on the main UI thread
+                    runOnUiThread(() -> updateChart(times, entries,lineChart));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors
+            }
+        });
+    }
+
+    private void retrieveLatestCOData() {
+        DatabaseReference coRef = databaseReference.child("airmonitoringV2").child("CO");
+        LineChart lineChart = findViewById(R.id.chartCO);
+        coRef.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Float> latestCO = new HashMap<>();
+                    List<Entry> entries = new ArrayList<>();
+                    List<String> times = new ArrayList<>();
+                    int index = 0;
+
+                    for (DataSnapshot dateSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot timeSnapshot : dateSnapshot.getChildren()) {
+                            String time = timeSnapshot.getKey();
+                            String coString = timeSnapshot.getValue(String.class);
+                            try {
+                                Float co = Float.parseFloat(coString);
+                                latestCO.put(time, co);
+                                times.add(time); // This list will hold time strings like "00:05", "00:10", etc.
+                                entries.add(new Entry(index, co));
+                                index++;
+                            } catch (NumberFormatException e) {
+                                // Handle the case where the string cannot be parsed as a float
+                            }
+                        }
+                    }
+
+                    // Update the chart on the main UI thread
+                    runOnUiThread(() -> updateChart(times, entries,lineChart));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors
+            }
+        });
+    }
+
+    private void retrieveLatestCO2Data() {
+        DatabaseReference co2Ref = databaseReference.child("airmonitoringV2").child("CO2");
+        LineChart lineChart = findViewById(R.id.chartCO2);
+        co2Ref.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Float> latestCO2 = new HashMap<>();
+                    List<Entry> entries = new ArrayList<>();
+                    List<String> times = new ArrayList<>();
+                    int index = 0;
+
+                    for (DataSnapshot dateSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot timeSnapshot : dateSnapshot.getChildren()) {
+                            String time = timeSnapshot.getKey();
+                            String co2String = timeSnapshot.getValue(String.class);
+                            try {
+                                Float co2 = Float.parseFloat(co2String);
+                                latestCO2.put(time, co2);
+                                times.add(time); // This list will hold time strings like "00:05", "00:10", etc.
+                                entries.add(new Entry(index, co2));
+                                index++;
+                            } catch (NumberFormatException e) {
+                                // Handle the case where the string cannot be parsed as a float
+                            }
+                        }
+                    }
+
+                    // Update the chart on the main UI thread
+                    runOnUiThread(() -> updateChart(times, entries,lineChart));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors
+            }
+        });
+    }
+
+    private void retrieveLatestNO2Data() {
+        DatabaseReference no2Ref = databaseReference.child("airmonitoringV2").child("NO2");
+        LineChart lineChart = findViewById(R.id.chartNO2);
+        no2Ref.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Float> latestNO2 = new HashMap<>();
+                    List<Entry> entries = new ArrayList<>();
+                    List<String> times = new ArrayList<>();
+                    int index = 0;
+
+                    for (DataSnapshot dateSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot timeSnapshot : dateSnapshot.getChildren()) {
+                            String time = timeSnapshot.getKey();
+                            String no2String = timeSnapshot.getValue(String.class);
+                            try {
+                                Float no2 = Float.parseFloat(no2String);
+                                latestNO2.put(time, no2);
+                                times.add(time); // This list will hold time strings like "00:05", "00:10", etc.
+                                entries.add(new Entry(index, no2));
+                                index++;
+                            } catch (NumberFormatException e) {
+                                // Handle the case where the string cannot be parsed as a float
+                            }
+                        }
+                    }
+
+                    // Update the chart on the main UI thread
+                    runOnUiThread(() -> updateChart(times, entries,lineChart));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors
+            }
+        });
+    }
+
+    private void retrieveLatestO3Data() {
+        DatabaseReference o3Ref = databaseReference.child("airmonitoringV2").child("Ozone");
+        LineChart lineChart = findViewById(R.id.chartO3);
+        o3Ref.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Map<String, Float> latestO3 = new HashMap<>();
+                    List<Entry> entries = new ArrayList<>();
+                    List<String> times = new ArrayList<>();
+                    int index = 0;
+
+                    for (DataSnapshot dateSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot timeSnapshot : dateSnapshot.getChildren()) {
+                            String time = timeSnapshot.getKey();
+                            String o3String = timeSnapshot.getValue(String.class);
+                            try {
+                                Float o3 = Float.parseFloat(o3String);
+                                latestO3.put(time, o3);
+                                times.add(time); // This list will hold time strings like "00:05", "00:10", etc.
+                                entries.add(new Entry(index, o3));
+                                index++;
+                            } catch (NumberFormatException e) {
+                                // Handle the case where the string cannot be parsed as a float
+                            }
+                        }
+                    }
+
+                    // Update the chart on the main UI thread
+                    runOnUiThread(() -> updateChart(times, entries,lineChart));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors
+            }
+        });
+    }
+
 
     private void updateChart(List<String> times, List<Entry> entries, LineChart lineChart) {
         // Calculate the maximum and minimum values from the entries
