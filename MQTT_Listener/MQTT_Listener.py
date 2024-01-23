@@ -47,7 +47,7 @@ def on_message(client, userdata, msg):
         normalized_date, normalized_time = normalize_timestamp(timestamp)
         print(normalized_date)
         # Ghi dữ liệu vào Firebase
-        # db.reference(f"/airmonitoring/{normalized_date}/{normalized_time}" + "_GMT_0700").set(data)
+        db.reference(f"/airmonitoring/{normalized_date}/{normalized_time}" + "_GMT_0700").set(data)
 
 
 # Kết nối với MQTT Server
