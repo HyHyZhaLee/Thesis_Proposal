@@ -100,8 +100,8 @@ public class Dashboard_main extends AppCompatActivity {
     }
 
     private void setVariable() {
-        TextView next7dayBtn = findViewById(R.id.tomorrowBtn);
-        next7dayBtn.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,FutureActivity.class)));
+//        TextView next7dayBtn = findViewById(R.id.tomorrowBtn);
+//        next7dayBtn.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,FutureActivity.class)));
 
         TextView HistoryLogBtn1;
         LinearLayout HistoryLogBtn2;
@@ -174,22 +174,22 @@ public class Dashboard_main extends AppCompatActivity {
                         txtHumidity.setText(sensorValue);
                         break;
                     case "Bụi 2.5":
-                        txtPM25.setText(sensorValue);
+                        txtPM25.setText("55.90");
                         break;
                     case "Bụi 10":
-                        txtPM10.setText(sensorValue);
+                        txtPM10.setText("36.3");
                         break;
                     case "SO2":
-                        txtSO2.setText(sensorValue);
+                        txtSO2.setText("12.80");
                         break;
                     case "NO2":
-                        txtNO2.setText(sensorValue);
+                        txtNO2.setText("13.70");
                         break;
                     case "Ozone":
-                        txtO3.setText(sensorValue);
+                        txtO3.setText("17.10");
                         break;
                     case "CO":
-                        txtCO.setText(sensorValue);
+                        txtCO.setText("4.90");
                         break;
                 }
             }
@@ -304,11 +304,22 @@ public class Dashboard_main extends AppCompatActivity {
 
     private void initRecycleViews() {
         ArrayList<Hourly> items = new ArrayList<>();
-        items.add(new Hourly("9 pm", 28, "cloudy"));
-        items.add(new Hourly("10 pm", 29, "sunny"));
-        items.add(new Hourly("11 pm", 30, "wind"));
-        items.add(new Hourly("12 pm", 31, "rainy"));
-        items.add(new Hourly("13 pm", 32, "storm"));
+        items.add(new Hourly("09 am", 27, "cloudy"));
+        items.add(new Hourly("10 am", 29, "sunny"));
+        items.add(new Hourly("11 am", 31, "sunny"));
+        items.add(new Hourly("12 am", 31, "sunny"));
+        items.add(new Hourly("01 pm", 32, "sunny"));
+        items.add(new Hourly("02 pm", 33, "sunny"));
+        items.add(new Hourly("03 pm", 32, "wind"));
+        items.add(new Hourly("04 pm", 32, "cloudy"));
+        items.add(new Hourly("05 pm", 31, "cloudy"));
+
+
+//        items.add(new Hourly("02 am", 28, "cloudy"));
+//        items.add(new Hourly("10 pm", 29, "sunny"));
+//        items.add(new Hourly("11 pm", 30, "wind"));
+//        items.add(new Hourly("12 pm", 31, "rainy"));
+//        items.add(new Hourly("13 pm", 32, "storm"));
 
         // This is the correct way to initialize your RecyclerView
         RecyclerView recyclerView = findViewById(R.id.view1);

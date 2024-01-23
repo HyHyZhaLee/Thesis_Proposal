@@ -9,7 +9,7 @@
  
 
 /* Begin init variables */
-  Wifi_esp32 wifi("cce_office", "0902449198");                      // Class Wifi_esp32 to setup wifi
+  Wifi_esp32 wifi;                      // Class Wifi_esp32 to setup wifi ("cce_office", "0902449198")
   MyMQTT myMQTT("mqttserver.tk", "bkair", "bkair_RgPQAZoA5N");      // Class MQTT
   SENSOR_DATA data;                                                 // Class json data for creating formated json data to publish
   hw_timer_t *timer = NULL;                                         // Watchdog timer
