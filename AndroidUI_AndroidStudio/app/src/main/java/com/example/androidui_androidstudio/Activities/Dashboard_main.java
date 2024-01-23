@@ -83,7 +83,6 @@ public class Dashboard_main extends AppCompatActivity {
         startMQTT();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        myRef.setValue("Hello World");
     }
 
     @Override
@@ -100,8 +99,8 @@ public class Dashboard_main extends AppCompatActivity {
     }
 
     private void setVariable() {
-//        TextView next7dayBtn = findViewById(R.id.tomorrowBtn);
-//        next7dayBtn.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,FutureActivity.class)));
+        TextView next7dayBtn = findViewById(R.id.tomorrowBtn);
+        next7dayBtn.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,FutureActivity.class)));
 
         TextView HistoryLogBtn1;
         LinearLayout HistoryLogBtn2;
@@ -174,22 +173,22 @@ public class Dashboard_main extends AppCompatActivity {
                         txtHumidity.setText(sensorValue);
                         break;
                     case "Bụi 2.5":
-                        txtPM25.setText("55.90");
+                        txtPM25.setText(sensorValue);
                         break;
                     case "Bụi 10":
-                        txtPM10.setText("36.3");
+                        txtPM10.setText(sensorValue);
                         break;
                     case "SO2":
-                        txtSO2.setText("12.80");
+                        txtSO2.setText(sensorValue);
                         break;
                     case "NO2":
-                        txtNO2.setText("13.70");
+                        txtNO2.setText(sensorValue);
                         break;
                     case "Ozone":
-                        txtO3.setText("17.10");
+                        txtO3.setText(sensorValue);
                         break;
                     case "CO":
-                        txtCO.setText("4.90");
+                        txtCO.setText(sensorValue);
                         break;
                 }
             }
@@ -328,20 +327,6 @@ public class Dashboard_main extends AppCompatActivity {
         RecyclerView.Adapter<HourlyAdapters.viewholder> adapterHourly = new HourlyAdapters(items);
         recyclerView.setAdapter(adapterHourly);
 
-
-//        ArrayList<Hourly> items2 = new ArrayList<>();
-//        items2.add(new Hourly("2222 pm", 28, "cloudy"));
-//        items2.add(new Hourly("565 pm", 29, "sunny"));
-//        items2.add(new Hourly("11 pm", 30, "wind"));
-//        items2.add(new Hourly("12 pm", 31, "rainy"));
-//        items2.add(new Hourly("13 pm", 32, "storm"));
-//
-//        // This is the correct way to initialize your RecyclerView
-//        RecyclerView recyclerView2 = findViewById(R.id.view2);
-//
-//        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-//        RecyclerView.Adapter<HourlyAdapters.viewholder> adapterHourly2 = new HourlyAdapters(items2);
-//        recyclerView2.setAdapter(adapterHourly2);
     }
 
     private void updateCurrentTime() {
