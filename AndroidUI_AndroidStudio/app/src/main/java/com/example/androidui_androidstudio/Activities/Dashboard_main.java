@@ -112,8 +112,8 @@ public class Dashboard_main extends AppCompatActivity implements GestureDetector
         TextView HistoryLogBtn1;
         LinearLayout HistoryLogBtn2;
         HistoryLogBtn1 = findViewById(R.id.HistoryLogBtn1);
-        HistoryLogBtn2 = findViewById(R.id.HistoryLogBtn2);
         HistoryLogBtn1.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,HistoryPage.class)));
+        HistoryLogBtn2 = findViewById(R.id.HistoryLogBtn2);
         HistoryLogBtn2.setOnClickListener(v -> startActivity(new Intent(Dashboard_main.this,HistoryPage.class)));
     }
 
