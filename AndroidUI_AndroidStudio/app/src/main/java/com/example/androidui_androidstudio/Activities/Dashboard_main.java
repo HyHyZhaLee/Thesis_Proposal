@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,8 +50,10 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 
-public class Dashboard_main extends AppCompatActivity {
+public class Dashboard_main extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
@@ -85,6 +89,7 @@ public class Dashboard_main extends AppCompatActivity {
         startMQTT();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+
     }
 
     @Override
@@ -359,6 +364,70 @@ public class Dashboard_main extends AppCompatActivity {
 
         return capitalizedString.toString().trim(); // trim to remove the last unnecessary space
     }
+    float x1,x2,y1,y2;
+    int MIN_DISTANCE = 150;
+    @Override
+    public boolean onTouchEvent(MotionEvent touchEvent) {
+        if(touchEvent != null){
+            onTouchEvent(touchEvent);
+        }
+        switch (touchEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+                float deltaX = x2 - x1;
+                float deltaY = y2 - y1;
+                if (Math.abs(deltaX) > MIN_DISTANCE) {
+                    if (x1 < x2) {
+                        Intent i = new Intent(Dashboard_main.this, HistoryPage.class);
+                        startActivity(i);
+                    } else if (x1 > x2) {
+                        Intent i = new Intent(Dashboard_main.this, Dashboard_main.class);
+                        startActivity(i);
+                    }
+                }
+                break;
+        }
+        return super.onTouchEvent(touchEvent);
+    }
+
+    @Override
+    public boolean onDown(@NonNull MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(@NonNull MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(@NonNull MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(@NonNull MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
+        return false;
+    }
+   /* --------
+    TEST SWIPE RIGHT
+    --------*/
+    /*
 
     float x1,x2,y1,y2;
 
@@ -382,5 +451,6 @@ public class Dashboard_main extends AppCompatActivity {
                 break;
         }
         return false;
-    }
+    }*/
+
 }
