@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
 
 public class Dashboard_main extends AppCompatActivity {
 
@@ -356,5 +358,29 @@ public class Dashboard_main extends AppCompatActivity {
         }
 
         return capitalizedString.toString().trim(); // trim to remove the last unnecessary space
+    }
+
+    float x1,x2,y1,y2;
+
+    public boolean onTouchEvent (MotionEvent touchEvent) {
+        switch (touchEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+
+                if (x1 < x2) {
+                    Intent i = new Intent(Dashboard_main.this, HistoryPage.class);
+                    startActivity(i);
+                } else if (x1 > x2){
+                    Intent i = new Intent(Dashboard_main.this, Dashboard_main.class);
+                    startActivity(i);
+                }
+                break;
+        }
+        return false;
     }
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     tools:context=".Activities.Dashboard_main">
-//this is branch 2.1.1
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -520,21 +520,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="More on history log"
+                            android:text="Swipe right to get more on history log"
                             android:textColor="@color/text_color"
                             android:textSize="16sp"
                             tools:ignore="DuplicateIds" />
 
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="→"
-                            android:textAlignment="viewEnd"
-                            android:textColor="@color/text_color"
-                            android:textSize="20sp"
-                            tools:ignore="DuplicateIds" />
+
 
                     </LinearLayout>
 
