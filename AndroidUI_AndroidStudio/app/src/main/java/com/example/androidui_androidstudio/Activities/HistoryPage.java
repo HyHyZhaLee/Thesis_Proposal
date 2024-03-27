@@ -7,6 +7,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TableLayout;
+
 import com.example.androidui_androidstudio.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -18,6 +20,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

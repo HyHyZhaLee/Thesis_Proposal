@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,7 +44,6 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -51,6 +51,8 @@ public class Dashboard_main extends AppCompatActivity {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
+
+    float x1,x2,y1,y2;
 
     //For weather API
     TextView txtWeatherStatus, txtAQI, txtCity, txtAdvice , txtAirPressure;
@@ -83,6 +85,27 @@ public class Dashboard_main extends AppCompatActivity {
         startMQTT();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+    }
+    public  boolean onTouchEvent(MotionEvent touchEvent){
+        switch(touchEvent.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+                if(x1 < x2){
+                    Intent Intent = new Intent(Dashboard_main.this, HistoryPage.class);
+                    startActivity(Intent);
+                }
+                else if(x1 > x2){
+                    Intent i = new Intent(Dashboard_main.this, FutureActivity.class);
+                    startActivity(i);
+                }
+                break;
+        }
+        return false;
     }
 
     @Override
