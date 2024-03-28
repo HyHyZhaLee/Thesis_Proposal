@@ -189,16 +189,16 @@ public class Dashboard_main extends AppCompatActivity {
                 txtAQItimestamp.setText("Lasted update at " + timestamp);
                 // Cập nhật TextView dựa trên tên cảm biến
                 switch (sensorName) {
-                    case "Nhiệt Độ":
+                    case "Temperature":
                         txtTemperature.setText(sensorValue);
                         break;
-                    case "Độ Ẩm":
+                    case "Humidity":
                         txtHumidity.setText(sensorValue);
                         break;
-                    case "Bụi 2.5":
+                    case "PM25":
                         txtPM25.setText(sensorValue);
                         break;
-                    case "Bụi 10":
+                    case "PM10":
                         txtPM10.setText(sensorValue);
                         break;
                     case "SO2":
@@ -243,8 +243,10 @@ public class Dashboard_main extends AppCompatActivity {
         imgWeatherStatus = findViewById(R.id.imageViewWeatherStatus);
 
         txtAirPressure = findViewById(R.id.textViewAirPressure);
-//        txtTemperature = findViewById(R.id.textViewTemperature);
-//        txtHumidity = findViewById(R.id.textViewHumidity);
+        txtTemperature = findViewById(R.id.textViewTemperature);
+        txtHumidity = findViewById(R.id.textViewHumidity);
+
+
         //Asking for permission and get the lat + long value
         getCurrentLocation();
 
@@ -282,8 +284,8 @@ public class Dashboard_main extends AppCompatActivity {
                         //Set air pressure
                         JSONObject jsonObject_main = jsonObject_respone.getJSONObject("main");
                         txtAirPressure.setText(jsonObject_main.getString("pressure") + " pHa");
-//                        txtTemperature.setText(jsonObject_main.getString("temp") + " °C");
-//                        txtHumidity.setText(jsonObject_main.getString("humidity") + " %");
+                        txtTemperature.setText(jsonObject_main.getString("temp") + " °C");
+                        txtHumidity.setText(jsonObject_main.getString("humidity") + " %");
 
 
 
@@ -325,6 +327,12 @@ public class Dashboard_main extends AppCompatActivity {
     }
 
     private void initRecycleViews() {
+        /* txtPM25 = findViewById(R.id.textViewPM25);
+        txtPM10 = findViewById(R.id.textViewPM10);
+        txtSO2 = findViewById(R.id.textViewSO2);
+        txtNO2 = findViewById(R.id.textViewNO2);
+        txtO3 = findViewById(R.id.textViewO3);
+        txtCO = findViewById(R.id.textViewCO);*/
         ArrayList<Hourly> items = new ArrayList<>();
         items.add(new Hourly("09 am", 27, "cloudy"));
         items.add(new Hourly("10 am", 29, "sunny"));
@@ -336,19 +344,35 @@ public class Dashboard_main extends AppCompatActivity {
         items.add(new Hourly("04 pm", 32, "cloudy"));
         items.add(new Hourly("05 pm", 31, "cloudy"));
 
-
-//        items.add(new Hourly("02 am", 28, "cloudy"));
-//        items.add(new Hourly("10 pm", 29, "sunny"));
-//        items.add(new Hourly("11 pm", 30, "wind"));
-//        items.add(new Hourly("12 pm", 31, "rainy"));
-//        items.add(new Hourly("13 pm", 32, "storm"));
-
         // This is the correct way to initialize your RecyclerView
         RecyclerView recyclerView = findViewById(R.id.view1);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         RecyclerView.Adapter<HourlyAdapters.viewholder> adapterHourly = new HourlyAdapters(items);
         recyclerView.setAdapter(adapterHourly);
+
+    }
+    public class Sensors{
+        String PM25, PM10, SO2, NO2,CO, O3;
+        public String getPM25(){
+            return PM25;
+        }
+        public String getPM10(){
+            return PM10;
+        }
+        public String getSO2(){
+            return SO2;
+        }
+        public String getNO2(){
+            return NO2;
+        }
+        public String getCO(){
+            return CO;
+        }
+        public String getO3(){
+            return O3;
+        }
+
 
     }
 
