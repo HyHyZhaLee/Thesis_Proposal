@@ -8,7 +8,7 @@
     tools:context=".Activities.HistoryPage"
     android:background="@color/background_color">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -16,26 +16,57 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/back_btn"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/back_btn"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp">
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight ="1"
+                            android:src="@drawable/back"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/back"
+                            tools:ignore="DuplicateIds" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:text="History Log"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_color"
+                        tools:ignore="DuplicateIds"/>
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/back"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/back"
-                    tools:ignore="DuplicateIds" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.tabs.TabLayout>
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:ignore="DuplicateIds">
+
+                    </androidx.viewpager2.widget.ViewPager2>
+                </LinearLayout>
+
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,7 +88,8 @@
                         android:layout_marginHorizontal="16dp"
                         android:text="Temperature History"
                         android:textColor="@color/text_color"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        tools:ignore="DuplicateIds" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/chartTemperature"
@@ -327,5 +359,5 @@
 
 
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
